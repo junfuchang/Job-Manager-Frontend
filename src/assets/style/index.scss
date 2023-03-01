@@ -1,0 +1,4 @@
+@mixin size-auto($witch, $height) {
+  width: calc($width * 100% / 1920);
+  height: calc($height * 100% / 1080);
+}

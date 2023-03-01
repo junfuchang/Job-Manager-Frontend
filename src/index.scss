@@ -1,1 +1,19 @@
+@import "~antd/dist/reset.css";
+@import "~/src/assets/style/index.scss";
 
+:root {
+  font-family: sans-serif, Helvetica, Inter, Avenir, Arial;
+  font-size: 18px;
+  line-height: 24px;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}

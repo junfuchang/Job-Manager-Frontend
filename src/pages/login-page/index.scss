@@ -1,0 +1,97 @@
+.login-page {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-color: teal;
+  background: url(~/src/assets/login/login-bg.jpg) no-repeat left top;
+  background-size: cover;
+}
+.login-header {
+  position: absolute;
+  left: 40px;
+  top: 20px;
+  color: black;
+}
+
+.login-panel {
+  @include size-auto(364, 448);
+  min-width: 260px;
+  max-width: 350px;
+  position: absolute;
+  right: calc(200 * 100% / 1920);
+  top: calc(203 * 100% / 1080);
+  padding: 35px 54px 49px 44px;
+  z-index: 1;
+
+  .welcome {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: gray;
+  }
+  .tip {
+    font-size: 22px;
+    margin-bottom: 30px;
+    color: gray;
+  }
+
+  .login-form,
+  .edit-form {
+    :global {
+      .custom-light-input-affix-wrapper,
+      .custom-dark-input-affix-wrapper {
+        height: 40px;
+        padding: 0 11px;
+        border-radius: 8px;
+        background-color: transparent;
+        .custom-light-input,
+        .custom-dark-input {
+          height: 38px;
+        }
+      }
+      .custom-light-input,
+      .custom-dark-input {
+        height: 40px;
+        border-radius: 8px;
+        background-color: transparent;
+      }
+      .custom-light-btn,
+      .custom-dark-btn {
+        height: 44px;
+        border-radius: 22px;
+      }
+
+      .custom-light-form-item,
+      .custom-dark-form-item {
+        margin-bottom: 16px;
+        &:nth-child(3) {
+          margin-bottom: 10px;
+        }
+        &:nth-child(4) {
+          margin-bottom: 20px;
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+      .custom-dark-input-password-icon {
+        color: rgba(255, 255, 255, 0.3);
+      }
+    }
+    .remember {
+      color: var(--gray-font-60);
+    }
+    .captcha {
+      @include size-auto(109px, 40px);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+}
+
+.register {
+  float: right;
+  &:hover {
+    color: darkblue;
+  }
+}
