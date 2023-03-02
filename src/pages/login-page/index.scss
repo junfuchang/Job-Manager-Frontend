@@ -10,11 +10,12 @@
   position: absolute;
   left: 40px;
   top: 20px;
-  color: black;
+  color: $blue;
 }
 
 .login-panel {
-  @include size-auto(364, 448);
+  width: 364px;
+  height: 448px;
   min-width: 260px;
   max-width: 350px;
   position: absolute;
@@ -27,12 +28,12 @@
     font-size: 30px;
     font-weight: 700;
     margin-bottom: 14px;
-    color: gray;
+    color: $gray;
   }
   .tip {
     font-size: 22px;
     margin-bottom: 30px;
-    color: gray;
+    color: $gray;
   }
 
   .login-form,
@@ -79,10 +80,12 @@
       }
     }
     .remember {
-      color: var(--gray-font-60);
+      color: rgba(47, 51, 57, 0.6);
     }
     .captcha {
-      @include size-auto(109px, 40px);
+      // @include size-auto(109, 40);
+      width: 109px;
+      height: 40px;
       border-radius: 4px;
       cursor: pointer;
     }

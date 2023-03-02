@@ -4,8 +4,7 @@ export interface MenuList {
   menuId: number;
   menuName: string;
   menuUrl: string;
-  pathRoute: string;
-  pathname: string;
+  pathName: string;
   componentPath: string;
   menuImgClass: string;
   parentId: number;
@@ -32,10 +31,12 @@ class LoginStore {
     token: string;
     menuInfo: Array<MenuList> | [];
   }) {
+    localStorage.removeItem("MENUINFO");
+    localStorage.removeItem("TOKEN");
+
     this.userInfo = data.userInfo;
     this.token = data.token;
     this.menuInfo = data.menuInfo;
-    console.log("this.menuInfo", this.menuInfo);
 
     localStorage.setItem("TOKEN", data.token);
     localStorage.setItem("MENUINFO", JSON.stringify(data.menuInfo));
@@ -49,7 +50,6 @@ class LoginStore {
     this.token = undefined;
     this.menuInfo = undefined;
     localStorage.removeItem("TOKEN");
-    localStorage.removeItem("SAVE_USER");
     localStorage.removeItem("MENUINFO");
   }
 

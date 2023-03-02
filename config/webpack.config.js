@@ -519,7 +519,16 @@ module.exports = function (webpackEnv) {
                   },
                 },
                 "sass-loader"
-              ),
+              ).concat({
+                // 这行的意思是引入加载器 sass-resources-loader
+                loader: "sass-resources-loader",
+                options: {
+                  // 这里是写全局 sass 文件路径
+                  resources: [
+                    path.resolve(__dirname, "../src/assets/style/index.scss"),
+                  ],
+                },
+              }),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
               // Remove this when webpack adds a warning or an error for this.
@@ -542,16 +551,7 @@ module.exports = function (webpackEnv) {
                   },
                 },
                 "sass-loader"
-              ).concat({
-                // 这行的意思是引入加载器 sass-resources-loader
-                loader: "sass-resources-loader",
-                options: {
-                  // 这里是写全局 sass 文件路径
-                  resources: [
-                    path.resolve(__dirname, "../src/assets/style/index.scss"),
-                  ],
-                },
-              }),
+              ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.

@@ -8,6 +8,7 @@
     "@formily/core": "^2.2.20",
     "@formily/react": "^2.2.20",
     "@formily/reactive": "^2.2.20",
+    "@loadable/component": "^5.15.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.14.1",
@@ -153,6 +154,7 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^8.0.0"
+    "node-sass": "^8.0.0",
+    "sass-resources-loader": "^2.2.5"
   }
 }

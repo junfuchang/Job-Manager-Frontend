@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Router } from "./routes";
-import { message } from "antd";
+import Router from "./routes";
 import { useRootStore } from "./store/RootStore";
+import { message } from "antd";
 import "./App.css";
-
-const whiteRoute: string[] = [];
 
 const App: React.FC = () => {
   const { loginStore } = useRootStore();
@@ -19,18 +17,18 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const token = loginStore.getToken;
-    if (
-      location.pathname !== "/login" &&
-      location.pathname !== "/" &&
-      !token &&
-      whiteRoute.every((e) => !location.pathname.includes(e))
-    ) {
+    const menus = loginStore.getMenuInfo;
+    if (location.pathname !== "/login" && location.pathname !== "/" && !token) {
       message.warning("登陆失效，请重新登录!");
       navigate("/login");
     }
   }, [location]);
 
-  return <div className="App">{Router()}</div>;
+  return (
+    <div className="App">
+      <Router />
+    </div>
+  );
 };
 
 export default App;

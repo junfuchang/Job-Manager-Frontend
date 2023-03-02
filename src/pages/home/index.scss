@@ -1,0 +1,57 @@
+.home-page {
+  width: 100%;
+  height: 100%;
+  .home-icon {
+    height: 32px;
+    margin: 16px;
+    margin-left: 20px;
+    background: url("~/src/assets/home/home-icon.png") left center no-repeat;
+    background-size: contain;
+  }
+
+  .home-content {
+    width: 100%;
+    height: 100%;
+    padding: 10px 15px 10px 15px;
+    .panel {
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      padding: 10px 20px;
+      overflow: auto;
+    }
+  }
+}
+
+.edit-pwd-modal {
+  .form-content {
+    padding: 20px 32px;
+  }
+  :global {
+    .custom-light-modal-body,
+    .custom-dark-modal-body {
+      padding: 0;
+    }
+    .custom-light-modal-header,
+    .custom-dark-modal-header {
+      border-bottom: 1px solid rgba(218, 221, 227, 0.2);
+    }
+    .custom-light-form-item-label label,
+    .custom-dark-form-item-label label {
+      font-size: 18px;
+    }
+    .custom-dark-input-affix-wrapper-status-error.custom-dark-input-password {
+      background: transparent !important;
+    }
+    .custom-dark-input-password-icon {
+      color: rgba(255, 255, 255, 0.3) !important;
+    }
+  }
+  .footer-item {
+    margin-bottom: 0;
+    .item-button {
+      display: inline-block;
+    }
+  }
+}

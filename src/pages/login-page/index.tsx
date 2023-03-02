@@ -26,6 +26,7 @@ const LoginPage: React.FC = () => {
       loginStore.setLogin(result.data);
       if (param[0].remember) {
         param[0].password = param[0].prePassword;
+
         localStorage.setItem("SAVE_USER", JSON.stringify(param[0]));
       } else {
         localStorage.removeItem("SAVE_USER");
@@ -60,9 +61,10 @@ const LoginPage: React.FC = () => {
             ref={form}
             className="login-form"
             onFinish={userLogin}
-            initialValues={JSON.parse(
-              localStorage.getItem("SAVE_USER") as string
-            )}
+            initialValues={{
+              ...JSON.parse(localStorage.getItem("SAVE_USER") as string),
+              remember: true,
+            }}
             autoComplete="off"
           >
             <Form.Item
@@ -85,7 +87,9 @@ const LoginPage: React.FC = () => {
 
             <Form.Item name="remember" valuePropName="checked">
               <div>
-                <Checkbox className="remember">记住密码</Checkbox>
+                <Checkbox className="remember" defaultChecked>
+                  记住密码
+                </Checkbox>
                 <Register />
               </div>
             </Form.Item>
