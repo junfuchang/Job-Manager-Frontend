@@ -1,16 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Checkbox, Form, Input, message } from "antd";
-import {
-  FormDialog,
-  FormItem,
-  FormLayout,
-  Input as FormInput,
-} from "@formily/antd-v5";
-import { createSchemaField } from "@formily/react";
-import { useBoolean, useRequest } from "ahooks";
+import { useRequest } from "ahooks";
 import md5 from "md5";
-import Register from "./register";
+import { Register } from "./register";
 import { login } from "../../api/Login";
 import { useRootStore } from "../../store/RootStore";
 import "./index.scss";

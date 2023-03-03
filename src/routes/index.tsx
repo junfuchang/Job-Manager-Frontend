@@ -59,9 +59,6 @@ const Router = () => {
     },
   ];
 
-  console.log("menuInfo", menuInfo);
-  console.log("routes", routes);
-
   return useRoutes(routes);
 };
 

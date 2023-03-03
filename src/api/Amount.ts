@@ -1,25 +1,40 @@
 import request from "../utils/request";
 
-// Amount列表
-export const getAmountList = async (pageInfo: any, formParams?: any) => {
-  const res = await request.post("/server-api/amount/getAmountList", {
+/**
+ * Amount 相关
+ */
+
+/**
+ * Amount列表条件查询
+ */
+export const selectAmountList = async (pageInfo: any, formParams?: any) => {
+  const res = await request.post("/server-api/amount/selectAmountList", {
     ...pageInfo,
     ...formParams,
   });
   return {
-    total: res.data.size,
-    list: res.data.records,
+    total: res?.data?.total ?? 0,
+    list: res?.data?.list ?? [],
   };
 };
 
-export const saveUser = async (params: any) => {
-  return request.post("/server-api/user/save", params);
+/**
+ * Amount删除
+ */
+export const deleteAmountById = async (params: any) => {
+  return request.post("/server-api/amount/deleteAmountById", params);
 };
 
-export const deleteUser = async (params: any) => {
-  return request.post("/server-api/user/deleteById", params);
+/**
+ * Amount更新
+ */
+export const updateAmount = async (params: any) => {
+  return request.post("/server-api/amount/updateAmount", params);
 };
 
-export const updateUser = async (params: any) => {
-  return request.post("/server-api/user/update", params);
+/**
+ * Amount新增
+ */
+export const insertAmount = async (params: any) => {
+  return request.post("/server-api/amount/insertAmount", params);
 };

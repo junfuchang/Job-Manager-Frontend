@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { createForm } from "@formily/core";
 import { createSchemaField } from "@formily/react";
 import { action } from "@formily/reactive";
-import { Tabs, message } from "antd";
+import { Button, Tabs, message } from "antd";
 import md5 from "md5";
 import {
   Form,
@@ -21,9 +21,14 @@ import {
 import { useRootStore } from "../../store/RootStore";
 import { useRequest } from "ahooks";
 import { studentRegister, companyRegister } from "../../api/Login";
-import "./index.scss";
+import { insertAmount } from "../../api/Amount";
 
-export const Register = () => {
+interface IAmountInsertForm {
+  flashList?: Function;
+}
+
+const AmountInsertForm: React.FC<IAmountInsertForm> = (props) => {
+  const { flashList } = props;
   const { schoolStore } = useRootStore();
   let dialog: any = useRef(null);
 
@@ -93,12 +98,6 @@ export const Register = () => {
             username: {
               type: "string",
               title: "账号",
-              "x-validator": [
-                {
-                  min: 6, // 最小长度6
-                  message: "最小长度不能小于6位",
-                },
-              ],
               "x-decorator": "FormItem",
               "x-component": "Input",
               "x-component-props": {
@@ -109,6 +108,12 @@ export const Register = () => {
                 tooltip: "用于平台登陆",
                 tooltipLayout: "text",
               },
+              "x-validator": [
+                {
+                  min: 6, // 最小长度6
+                  message: "最小长度不能小于6位",
+                },
+              ],
               required: true,
               "x-index": 0,
               name: "username",
@@ -340,7 +345,8 @@ export const Register = () => {
     const { run: fetchStudentRegister } = useRequest(studentRegister, {
       manual: true,
       onSuccess: () => {
-        message.success("注册成功!");
+        message.success("新增成功!");
+        flashList?.();
         if (dialog.current.close) dialog.current.close();
       },
       onError: (result) => {
@@ -368,7 +374,7 @@ export const Register = () => {
     return (
       <Form form={studentRegisterForm} onAutoSubmit={handelSubmit}>
         <SchemaField schema={studentSchema} />
-        <Submit block>注册</Submit>
+        <Submit block>新增</Submit>
       </Form>
     );
   };
@@ -673,7 +679,8 @@ export const Register = () => {
     const { runAsync: fetchCompanyRegister } = useRequest(companyRegister, {
       manual: true,
       onSuccess: () => {
-        message.success("注册成功!");
+        message.success("新增成功!");
+        flashList?.();
         if (dialog.current.close) dialog.current.close();
       },
       onError: (result) => {
@@ -702,15 +709,189 @@ export const Register = () => {
         onAutoSubmit={handelSubmit}
       >
         <SchemaField schema={companySchema} />
-        <Submit block>注册</Submit>
+        <Submit block>新增</Submit>
+      </Form>
+    );
+  };
+
+  const AdminForm = () => {
+    /**
+     * 创建Form
+     */
+    const adminRegisterForm = React.useMemo(
+      () => createForm({ validateFirst: true }),
+      []
+    );
+    /**
+     * 创建Schema
+     */
+    const adminSchema = {
+      type: "object",
+      properties: {
+        form_layout: {
+          type: "void",
+          "x-component": "FormLayout",
+          "x-component-props": {
+            feedbackLayout: "terse",
+            size: "small",
+            layout: "horizontal",
+            labelWidth: "auto",
+            labelCol: 6,
+            wrapperCol: 16,
+            wrapperWidth: "auto",
+            colon: true,
+            wrapperAlign: "left",
+            labelWrap: false,
+            bordered: true,
+            labelAlign: "right",
+          },
+          name: "form_layout",
+          "x-designable-id": "4azx24c77ea",
+          "x-index": 1,
+          properties: {
+            username: {
+              type: "string",
+              title: "账号",
+              "x-decorator": "FormItem",
+              "x-component": "Input",
+              "x-component-props": {
+                maxLength: 16,
+                placeholder: "账户名称",
+              },
+              "x-validator": [
+                {
+                  min: 6, // 最小长度6
+                  message: "最小长度不能小于6位",
+                },
+              ],
+              "x-decorator-props": {
+                tooltip: "用于平台登陆",
+                tooltipLayout: "text",
+              },
+              required: true,
+              "x-index": 0,
+              name: "username",
+            },
+            password: {
+              title: "密码",
+              "x-decorator": "FormItem",
+              "x-component": "Password",
+              "x-validator": [
+                {
+                  min: 6, // 最小长度6
+                  message: "最小长度不能小于6位",
+                },
+              ],
+              "x-component-props": {
+                maxLength: 16,
+                placeholder: "登陆密码",
+                checkStrength: true,
+              },
+              "x-decorator-props": {},
+              required: true,
+              name: "passsword",
+              "x-designable-id": "rsa81ofgzwf",
+              "x-index": 1,
+              "x-reactions": [
+                {
+                  dependencies: [".repeat_password"],
+                  fulfill: {
+                    state: {
+                      selfErrors:
+                        "{{$deps[0] && $self.value && $self.value !== $deps[0] ? '确认密码不匹配' : ''}}",
+                    },
+                  },
+                },
+              ],
+            },
+            repeat_password: {
+              title: "确认密码",
+              "x-decorator": "FormItem",
+              "x-component": "Password",
+              "x-validator": [{}],
+              "x-component-props": {
+                checkStrength: true,
+                maxLength: 16,
+                placeholder: "确认密码",
+              },
+              "x-decorator-props": {},
+              name: "repeat_password",
+              required: true,
+              "x-designable-id": "u66mye5iuqi",
+              "x-index": 2,
+              "x-reactions": [
+                {
+                  dependencies: [".password"],
+                  fulfill: {
+                    state: {
+                      selfErrors:
+                        "{{$deps[0] && $self.value && $self.value !== $deps[0] ? '确认密码不匹配' : ''}}",
+                    },
+                  },
+                },
+              ],
+            },
+            roleId: {
+              type: "number",
+              title: "角色",
+              "x-decorator": "FormItem",
+              "x-component": "Input",
+              "x-validator": [],
+              "x-component-props": {},
+              "x-decorator-props": {},
+              name: "roleId",
+              default: 2,
+              "x-pattern": "disabled",
+              "x-display": "hidden",
+              "x-designable-id": "goq1p16i080",
+              "x-index": 3,
+            },
+          },
+        },
+      },
+    };
+    /**
+     * 发生请求
+     */
+    const { run: fetchAdminRegister } = useRequest(insertAmount, {
+      manual: true,
+      onSuccess: () => {
+        message.success("新增成功!");
+        flashList?.();
+        if (dialog.current.close) dialog.current.close();
+      },
+      onError: (result) => {
+        message.error(result.message);
+      },
+      onFinally() {
+        adminRegisterForm.loading = false;
+      },
+    });
+    /**
+     * 提交Form
+     */
+    const handelSubmit = async (field: any) => {
+      adminRegisterForm.loading = true;
+      await fetchAdminRegister({
+        ...field,
+        password: field?.password ? md5(field?.password) : undefined,
+      });
+    };
+    /**
+     * UI
+     */
+    return (
+      <Form form={adminRegisterForm} onAutoSubmit={handelSubmit}>
+        <SchemaField schema={adminSchema} />
+        <Submit block>新增</Submit>
       </Form>
     );
   };
 
   return (
     <FormDialog.Portal>
-      <a
-        className="register"
+      <Button
+        type="primary"
         onClick={() => {
           dialog.current = FormDialog(
             { maskClosable: false, footer: null },
@@ -730,14 +911,19 @@ export const Register = () => {
                     }}
                     items={[
                       {
-                        key: "1",
-                        label: `学生注册`,
+                        key: "student",
+                        label: `新增学生`,
                         children: <StudentForm />,
                       },
                       {
-                        key: "2",
-                        label: "企业注册",
+                        key: "company",
+                        label: "新增企业",
                         children: <CompanyForm />,
+                      },
+                      {
+                        key: "admin",
+                        label: `新增管理员`,
+                        children: <AdminForm />,
                       },
                     ]}
                   ></Tabs>
@@ -748,8 +934,10 @@ export const Register = () => {
           dialog.current.open();
         }}
       >
-        新用户注册
-      </a>
+        添加
+      </Button>
     </FormDialog.Portal>
   );
 };
+
+export default AmountInsertForm;

@@ -46,8 +46,6 @@ const Home: React.FC = () => {
 
   const [collapsed, { toggle: toggleCollapsed }] = useBoolean(false);
 
-  console.log("----menus", menus);
-
   const defaultPage = menus?.[0]?.key ?? "11";
   useEffect(() => {
     navigate("/home/" + defaultPage);

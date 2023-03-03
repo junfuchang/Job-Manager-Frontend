@@ -1,7 +1,6 @@
 import { ResultType } from "./../utils/request";
 import { getCollegeMajorData } from "./../api/School";
-import { useRequest } from "ahooks";
-import { makeAutoObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 class SchoolStore {
   //级联选择框：学院-专业
@@ -27,7 +26,6 @@ class SchoolStore {
       } else {
         this.collegeMajorData = undefined;
       }
-      console.log(this.collegeMajorData);
     }
   }
 
