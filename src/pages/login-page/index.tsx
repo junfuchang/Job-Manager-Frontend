@@ -25,7 +25,7 @@ const LoginPage: React.FC = () => {
         localStorage.removeItem("SAVE_USER");
       }
       message.success("登陆成功");
-      navigate("/home");
+      navigate("/home/overview");
     },
     onError: (result) => {
       message.error(result.message);

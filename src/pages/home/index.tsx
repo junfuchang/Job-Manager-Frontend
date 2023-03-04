@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Layout, Menu, Modal, Form, Input, Button } from "antd";
-import type { MenuProps } from "antd";
+import React, { useState } from "react";
+import { Layout, Menu } from "antd";
 import { useBoolean } from "ahooks";
 import { createFromIconfontCN } from "@ant-design/icons";
-import c from "classnames";
 import "./index.scss";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import HomeHeader from "./home-header";
@@ -12,10 +10,10 @@ import { useRootStore } from "../../store/RootStore";
 import { MenuList } from "../../store/LoginStore";
 
 const { Header, Sider, Content } = Layout;
-type MenuItem = Required<MenuProps>["items"][number];
 
 function bindMenu(menuList: MenuList[] = []) {
   let arr: any = [];
+  // eslint-disable-next-line array-callback-return
   menuList.map((item) => {
     const IconFont = createFromIconfontCN({
       scriptUrl: "//at.alicdn.com/t/c/font_3926371_3prqdkgqn7u.js",
@@ -46,11 +44,6 @@ const Home: React.FC = () => {
 
   const [collapsed, { toggle: toggleCollapsed }] = useBoolean(false);
 
-  const defaultPage = menus?.[0]?.key ?? "11";
-  useEffect(() => {
-    navigate("/home/" + defaultPage);
-  }, []);
-
   return (
     <>
       <Layout className="home-page">
@@ -59,7 +52,7 @@ const Home: React.FC = () => {
           <Menu
             id="sideBarMenu"
             theme="dark"
-            defaultSelectedKeys={[defaultPage]}
+            defaultSelectedKeys={[menus?.[0]?.key ?? "overview"]}
             items={menus}
             onClick={(value) => {
               navigate("/home/" + value.key);

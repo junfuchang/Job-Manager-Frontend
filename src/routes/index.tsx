@@ -33,7 +33,7 @@ const Router = () => {
         } else {
           arr.push({
             path: item.pathName,
-            //element:<ComponentNode/>
+            // element: <ComponentNode />,
             children: [...bindRouter(item.menuChilds)],
           });
         }

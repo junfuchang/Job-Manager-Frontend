@@ -4,7 +4,7 @@ export const getCollegeMajorData = async () => {
   return request.post("/server-api/major/college-major");
 };
 
-export const saveCollege = async (params: any) => {
+export const insertmajor = async (params: any) => {
   return request.post("/server-api/college/save", params);
 };
 
