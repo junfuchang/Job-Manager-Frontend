@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import { useBoolean } from "ahooks";
-import { createFromIconfontCN } from "@ant-design/icons";
+import * as Icon from "@ant-design/icons";
 import "./index.scss";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import HomeHeader from "./home-header";
@@ -13,23 +13,29 @@ const { Header, Sider, Content } = Layout;
 
 function bindMenu(menuList: MenuList[] = []) {
   let arr: any = [];
+
+  const iconToElement = (name: string) => {
+    return React.createElement(Icon && (Icon as any)[name], {
+      style: {
+        fontSize: 16,
+        color: "white",
+      },
+    });
+  };
+
   // eslint-disable-next-line array-callback-return
   menuList.map((item) => {
-    const IconFont = createFromIconfontCN({
-      scriptUrl: "//at.alicdn.com/t/c/font_3926371_3prqdkgqn7u.js",
-    });
-
     if (item?.menuChilds?.length) {
       arr.push({
         key: item.menuUrl,
-        icon: <IconFont type={item.menuImgClass} />,
+        icon: item.menuImgClass ? iconToElement(item.menuImgClass) : "",
         label: item.menuName,
         children: [...bindMenu(item.menuChilds)],
       });
     } else {
       arr.push({
         key: item.menuUrl,
-        icon: <IconFont type={item.menuImgClass} />,
+        icon: item.menuImgClass ? iconToElement(item.menuImgClass) : "",
         label: <Link to={item.menuUrl}>{item.menuName}</Link>,
       });
     }
