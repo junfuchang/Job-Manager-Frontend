@@ -17,6 +17,7 @@ class LoginStore {
   token: string | undefined;
   userInfo: any;
   menuInfo: any;
+  routePath = this.getMenuInfo?.[0]?.key ?? "overview";
 
   constructor() {
     makeAutoObservable(this);
@@ -66,6 +67,19 @@ class LoginStore {
       JSON.parse(localStorage.getItem("MENUINFO") || "[]") ??
       []
     );
+  }
+
+  /**
+   * routePath
+   */
+  setRoutePath(route: string) {
+    localStorage.setItem("routePath", route);
+    this.routePath = route;
+  }
+  get getRoutePath() {
+    if (localStorage.getItem("routePath"))
+      return localStorage.getItem("routePath");
+    return this.routePath;
   }
 }
 

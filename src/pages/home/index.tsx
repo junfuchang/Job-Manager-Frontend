@@ -58,10 +58,11 @@ const Home: React.FC = () => {
           <Menu
             id="sideBarMenu"
             theme="dark"
-            defaultSelectedKeys={[menus?.[0]?.key ?? "overview"]}
+            defaultSelectedKeys={[loginStore.getRoutePath]}
             items={menus}
             onClick={(value) => {
               navigate("/home/" + value.key);
+              loginStore.setRoutePath(value.key);
             }}
           />
         </Sider>
