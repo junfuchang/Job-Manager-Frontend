@@ -8,7 +8,6 @@ import { message } from "antd";
 import { RcFile, UploadFile } from "antd/es/upload/interface";
 import { createForm } from "@formily/core";
 import { createSchemaField } from "@formily/react";
-import { action } from "@formily/reactive";
 import {
   Form,
   FormDialog,
@@ -26,7 +25,6 @@ import {
 const InsertCompanyForm = (props: any) => {
   const { afterSuccess } = props;
 
-  const { schoolStore } = useRootStore();
   const SchemaField = createSchemaField({
     components: {
       FormLayout,
@@ -38,16 +36,6 @@ const InsertCompanyForm = (props: any) => {
       Radio,
       Submit,
       Upload,
-    },
-    scope: {
-      getMajors: async (field: { loading: boolean; dataSource: any }) => {
-        field.loading = true;
-        const data = await schoolStore.getCollegeMajorData();
-        action(() => {
-          field.dataSource = data;
-          field.loading = false;
-        });
-      },
     },
   });
 

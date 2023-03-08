@@ -50,16 +50,6 @@ const AmountInsertForm: React.FC<IAmountInsertForm> = (props) => {
       Submit,
       Upload,
     },
-    scope: {
-      getMajors: async (field: { loading: boolean; dataSource: any }) => {
-        field.loading = true;
-        const data = await schoolStore.getCollegeMajorData();
-        action(() => {
-          field.dataSource = data;
-          field.loading = false;
-        });
-      },
-    },
   });
 
   const AdminForm = () => {

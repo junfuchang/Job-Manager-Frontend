@@ -1,17 +1,12 @@
 import { ResultType } from "./../utils/request";
 import { getCollegeMajorData } from "./../api/School";
 import { makeAutoObservable } from "mobx";
+import { stringify } from "querystring";
+import { json } from "stream/consumers";
 
 class SchoolStore {
   //级联选择框：学院-专业
-  collegeMajorData:
-    | {
-        value: number;
-        label: string;
-        children: Array<object>;
-      }
-    | undefined
-    | null;
+  collegeMajorData: any = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -19,19 +14,24 @@ class SchoolStore {
   }
 
   *loadCollegeMajorData() {
-    if (!this.collegeMajorData) {
+    if (!this.collegeMajorData.length) {
       const res: ResultType = yield getCollegeMajorData();
       if (res.code === 200) {
         this.collegeMajorData = res.data;
-      } else {
-        this.collegeMajorData = undefined;
+        localStorage.setItem("MAJORINFO", JSON.stringify(res.data));
       }
     }
   }
 
-  async getCollegeMajorData() {
-    if (!this.collegeMajorData) {
-      await this.loadCollegeMajorData();
+  *getCollegeMajorData() {
+    if (this.collegeMajorData.length) {
+      return this.collegeMajorData;
+    }
+    if (JSON.parse(localStorage.getItem("MAJORINFO") ?? "[]").length) {
+      return JSON.parse(localStorage.getItem("MAJORINFO") ?? "[]");
+    }
+    if (!this.collegeMajorData.length) {
+      yield this.loadCollegeMajorData();
     }
     return this.collegeMajorData;
   }
