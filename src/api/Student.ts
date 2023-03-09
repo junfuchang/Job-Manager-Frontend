@@ -10,3 +10,7 @@ export const selectStudentList = async (pageInfo: any, formParams?: any) => {
     list: res?.data?.records ?? [],
   };
 };
+
+export const updateStudent = async (params: any) => {
+  return request.post("/server-api/student/updateStudent", params);
+};

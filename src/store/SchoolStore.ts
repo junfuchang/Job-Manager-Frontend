@@ -1,8 +1,6 @@
 import { ResultType } from "./../utils/request";
-import { getCollegeMajorData } from "./../api/School";
+import { getCollegeMajorData as fetchMajor } from "./../api/School";
 import { makeAutoObservable } from "mobx";
-import { stringify } from "querystring";
-import { json } from "stream/consumers";
 
 class SchoolStore {
   //级联选择框：学院-专业
@@ -15,7 +13,7 @@ class SchoolStore {
 
   *loadCollegeMajorData() {
     if (!this.collegeMajorData.length) {
-      const res: ResultType = yield getCollegeMajorData();
+      const res: ResultType = yield fetchMajor();
       if (res.code === 200) {
         this.collegeMajorData = res.data;
         localStorage.setItem("MAJORINFO", JSON.stringify(res.data));

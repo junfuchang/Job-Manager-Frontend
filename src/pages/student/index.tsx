@@ -138,17 +138,20 @@ const StudentManager = () => {
       width: 290,
       render: (_: any, record: any) => (
         <Space size="middle">
-          <Button
-            size="small"
-            onClick={() => {
-              FormDrawer(
-                { footer: false, title: "学生毕业信息", width: 400 },
-                <GraduateInfo record={record} />
-              ).open();
-            }}
-          >
-            毕业信息
-          </Button>
+          {record.graduateFlag === 1 ? (
+            <Button
+              size="small"
+              onClick={() => {
+                FormDrawer(
+                  { footer: false, title: "学生毕业信息", width: 400 },
+                  <GraduateInfo record={record} />
+                ).open();
+              }}
+            >
+              毕业信息
+            </Button>
+          ) : undefined}
+
           <Button size="small">简历信息</Button>
           <Button
             size="small"
