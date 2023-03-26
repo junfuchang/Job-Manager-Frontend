@@ -1,10 +1,10 @@
 import React from "react";
 import { useBoolean } from "ahooks";
 import { Modal, Form, Input, Button, Dropdown, MenuProps, message } from "antd";
-import "./index.scss";
 import { SettingFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useRootStore } from "../../store/RootStore";
+import "./index.scss";
 
 interface HomeHeaderProps {}
 

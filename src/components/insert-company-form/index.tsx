@@ -351,11 +351,13 @@ const InsertCompanyForm = (props: any) => {
   const handelSubmit = async (field: any) => {
     companyRegisterForm.loading = true;
     let res: any;
-    if (companyPic.current.getAll.length > 0) {
+    if (companyPic.current.getAll("file").length > 0) {
       res = await fetch("/server-api/file/insertImg", {
         method: "POST",
         body: companyPic.current,
       }).then((res) => res.json());
+
+      companyPic.current = new FormData();
 
       if (res.code >= 400) {
         return Promise.reject("图片上传失败");

@@ -124,7 +124,7 @@ const schema = {
                   "x-validator": "number",
                   "x-component-props": {
                     placeholder: "学号",
-                    maxLength: 16,
+                    maxLength: 10,
                   },
                   "x-decorator-props": {},
                   required: true,

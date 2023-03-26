@@ -20,6 +20,7 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import { FormDrawer } from "@formily/antd-v5";
 import AmountUpdateForm from "./amount-upate-form";
 import AmountInsertForm from "./amount-insert-form";
+import { rejects } from "assert";
 
 const { confirm } = Modal;
 const { Option } = Select;
@@ -51,6 +52,7 @@ const AmountManager = () => {
     manual: true,
     onSuccess: () => {
       message.success("删除成功");
+      submit();
     },
     onError: (result) => {
       message.error(result.message);
@@ -67,7 +69,6 @@ const AmountManager = () => {
       cancelText: "取消",
       onOk() {
         fetchDeleteAmountById({ amountId: amount.amountId });
-        submit();
       },
     });
   };

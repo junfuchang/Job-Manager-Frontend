@@ -103,6 +103,7 @@ module.exports = function (proxy, allowedHost) {
     proxy: {
       "/server-api": {
         target: "http://localhost:8080",
+        // target: "http://192.168.100.100:8080",
         changeOrigin: true,
         pathRewrite: {
           "^/server-api": "",

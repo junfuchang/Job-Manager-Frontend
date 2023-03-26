@@ -191,7 +191,7 @@ const InsertStudentForm = (props: any) => {
             "x-component": "Input",
             "x-validator": "integer",
             "x-component-props": {
-              maxLength: 16,
+              maxLength: 10,
               placeholder: "学生学号",
             },
             "x-decorator-props": {},
@@ -356,16 +356,20 @@ const InsertStudentForm = (props: any) => {
   const handelSubmit = async (field: any) => {
     studentRegisterForm.loading = true;
     let res: any;
-    if (avatarData.current.getAll.length > 0) {
+
+    if (avatarData.current.getAll("file").length > 0) {
       res = await fetch("/server-api/file/insertImg", {
         method: "POST",
         body: avatarData.current,
       }).then((res) => res.json());
 
+      avatarData.current = new FormData();
+
       if (res.code >= 400) {
         return Promise.reject("图片上传失败");
       }
     }
+
     await fetchStudentRegister({
       ...field,
       avatar: res?.data?.src,

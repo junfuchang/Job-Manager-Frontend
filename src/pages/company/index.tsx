@@ -6,32 +6,28 @@ import {
   Form,
   Input,
   Row,
-  Select,
   Space,
   Table,
   InputNumber,
   Avatar,
-  Cascader,
 } from "antd";
-import { FormDialog, FormDrawer } from "@formily/antd-v5";
-import { selectStudentList } from "../../api/Student";
+import { FormDrawer } from "@formily/antd-v5";
+import { selectCompanyList } from "../../api/Company";
 import { observer } from "mobx-react-lite";
-import { useRootStore } from "../../store/RootStore";
 import { useRef } from "react";
-
-const { Option } = Select;
+import UpdateCompany from "./update-company";
 
 const CompanyManager = () => {
   const [form] = Form.useForm();
   const updateDrawer = useRef<any>();
 
-  const { tableProps: studentListProps, search: studentListSearch } =
-    useAntdTable(selectStudentList, {
+  const { tableProps: companyListProps, search: companyListSearch } =
+    useAntdTable(selectCompanyList, {
       form,
       onBefore(params: any) {
-        if (params[1]?.majorId?.length) {
-          params[1].majorId = params[1].majorId[1];
-        }
+        // if (params[1]?.majorId?.length) {
+        //   params[1].majorId = params[1].majorId[1];
+        // }
       },
       defaultParams: [
         {
@@ -41,9 +37,9 @@ const CompanyManager = () => {
         {},
       ],
       defaultPageSize: 20,
-      cacheKey: "AmountListCache",
+      cacheKey: "CompanyListCache",
     });
-  const { submit, reset } = studentListSearch;
+  const { submit, reset } = companyListSearch;
 
   const afterSuccess = () => {
     if (updateDrawer.current) {
@@ -53,7 +49,6 @@ const CompanyManager = () => {
   };
 
   const columns = [
-    // 表格信息
     {
       title: "企业ID",
       key: "companyId",
@@ -64,7 +59,21 @@ const CompanyManager = () => {
       title: "企业名称",
       key: "name",
       dataIndex: "name",
-      width: 120,
+      width: 180,
+    },
+    {
+      title: "企业标志",
+      key: "pic",
+      dataIndex: "pic",
+      width: 90,
+      render: (_: any, record: any) => (
+        <Avatar
+          shape="square"
+          src={record?.pic}
+          style={{ backgroundColor: "#87d068" }}
+          icon={<UserOutlined />}
+        />
+      ),
     },
     {
       title: "社会信用代码",
@@ -74,8 +83,8 @@ const CompanyManager = () => {
     },
     {
       title: "公司类型",
-      key: "username",
-      dataIndex: "username",
+      key: "type",
+      dataIndex: "type",
       width: 130,
     },
     {
@@ -86,71 +95,38 @@ const CompanyManager = () => {
     },
     {
       title: "公司地址",
-      key: "contact",
-      dataIndex: "contact",
-      width: 150,
+      key: "address",
+      dataIndex: "address",
     },
     {
       title: "公司官网",
-      key: "contact",
-      dataIndex: "contact",
-      width: 150,
+      key: "website",
+      dataIndex: "website",
     },
     {
       title: "备注",
-      key: "contact",
-      dataIndex: "contact",
-      width: 150,
+      key: "remark",
+      dataIndex: "remark",
     },
-    {
-      title: "头像",
-      key: "avatar",
-      dataIndex: "avatar",
-      width: 70,
-      render: (_: any, record: any) => (
-        <Avatar
-          shape="square"
-          src={record?.avatar}
-          style={{ backgroundColor: "#87d068" }}
-          icon={<UserOutlined />}
-        />
-      ),
-    },
+
     {
       title: "操作",
       key: "action",
-      width: 290,
       render: (_: any, record: any) => (
         <Space size="middle">
-          {record.graduateFlag === 1 ? (
-            <Button
-              size="small"
-              onClick={() => {
-                FormDrawer(
-                  { footer: false, title: "学生毕业信息", width: 400 },
-                  <>s</>
-                  // <GraduateInfo record={record} />
-                ).open();
-              }}
-            >
-              毕业信息
-            </Button>
-          ) : undefined}
-
-          <Button size="small">简历信息</Button>
           <Button
             size="small"
             onClick={() => {
               updateDrawer.current = FormDrawer(
-                { footer: false, title: "修改学生信息" },
-                <>s</>
-                // <UpdateStudent record={record} flashList={afterSuccess} />
+                { footer: false, title: "修改企业信息", width: 500 },
+                <UpdateCompany record={record} flashList={afterSuccess} />
               );
               updateDrawer.current.open();
             }}
           >
             编辑
           </Button>
+          <Button size="small">查看岗位</Button>
         </Space>
       ),
     },
@@ -162,34 +138,17 @@ const CompanyManager = () => {
         <Form form={form}>
           <Row gutter={24}>
             <Col span={4}>
-              <Form.Item label="学号" name="studentId">
+              <Form.Item label="社会信用代码" name="code">
                 <InputNumber
                   style={{ width: "100%" }}
-                  placeholder="学号"
+                  placeholder="社会信用代码"
                   controls={false}
                 />
               </Form.Item>
             </Col>
             <Col span={4}>
-              <Form.Item label="姓名" name="name">
-                <Input placeholder="学生姓名" />
-              </Form.Item>
-            </Col>
-            <Col span={4}>
-              <Form.Item label="专业" name="majorId">
-                {/* <Cascader
-                  options={schoolStore.collegeMajorData as any}
-                  placeholder="学生专业"
-                /> */}
-              </Form.Item>
-            </Col>
-            <Col span={4}>
-              <Form.Item label="是否毕业" name="graduateFlag" initialValue={-1}>
-                <Select>
-                  <Option value={-1}>全部</Option>
-                  <Option value={1}>是</Option>
-                  <Option value={0}>否</Option>
-                </Select>
+              <Form.Item label="企业名称" name="name">
+                <Input placeholder="企业名称" />
               </Form.Item>
             </Col>
           </Row>
@@ -211,8 +170,8 @@ const CompanyManager = () => {
       <div>
         <Table
           columns={columns}
-          rowKey="studentId"
-          {...studentListProps}
+          rowKey="companyId"
+          {...companyListProps}
           scroll={{ y: "calc(100vh - 340px)" }}
         />
       </div>

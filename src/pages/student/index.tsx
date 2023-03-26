@@ -13,13 +13,15 @@ import {
   Avatar,
   Cascader,
 } from "antd";
-import { FormDialog, FormDrawer } from "@formily/antd-v5";
+import { FormDrawer } from "@formily/antd-v5";
 import { selectStudentList } from "../../api/Student";
 import { observer } from "mobx-react-lite";
 import { useRootStore } from "../../store/RootStore";
 import GraduateInfo from "./graduate-info";
 import { useRef } from "react";
 import UpdateStudent from "./update-student";
+import ResumeDisplay from "../../components/resume-display";
+import save2PDF from "../../utils/save2PDF";
 
 const { Option } = Select;
 
@@ -61,13 +63,11 @@ const StudentManager = () => {
       title: "学号",
       key: "studentId",
       dataIndex: "studentId",
-      width: 120,
     },
     {
       title: "姓名",
       key: "name",
       dataIndex: "name",
-      width: 120,
     },
     {
       title: "头像",
@@ -110,7 +110,6 @@ const StudentManager = () => {
       title: "联系方式",
       key: "contact",
       dataIndex: "contact",
-      width: 150,
     },
     {
       title: "出生日期",
@@ -135,9 +134,22 @@ const StudentManager = () => {
     {
       title: "操作",
       key: "action",
-      width: 290,
       render: (_: any, record: any) => (
         <Space size="middle">
+          <Button
+            size="small"
+            type="primary"
+            onClick={() => {
+              updateDrawer.current = FormDrawer(
+                { footer: false, title: "修改学生信息" },
+                <UpdateStudent record={record} flashList={afterSuccess} />
+              );
+              updateDrawer.current.open();
+            }}
+          >
+            编辑
+          </Button>
+
           {record.graduateFlag === 1 ? (
             <Button
               size="small"
@@ -152,19 +164,36 @@ const StudentManager = () => {
             </Button>
           ) : undefined}
 
-          <Button size="small">简历信息</Button>
-          <Button
-            size="small"
-            onClick={() => {
-              updateDrawer.current = FormDrawer(
-                { footer: false, title: "修改学生信息" },
-                <UpdateStudent record={record} flashList={afterSuccess} />
-              );
-              updateDrawer.current.open();
-            }}
-          >
-            编辑
-          </Button>
+          {record.resume != null ? (
+            <Button
+              size="small"
+              onClick={() => {
+                FormDrawer(
+                  {
+                    footer: false,
+                    title: "学生简历详情",
+                    width: 800,
+                    extra: (
+                      <Button
+                        onClick={() => {
+                          const dom =
+                            document.getElementById("content-display");
+                          if (dom) {
+                            save2PDF(dom, (record?.username ?? "") + "简历");
+                          }
+                        }}
+                      >
+                        导出PDF
+                      </Button>
+                    ),
+                  },
+                  <ResumeDisplay record={record} />
+                ).open();
+              }}
+            >
+              简历信息
+            </Button>
+          ) : undefined}
         </Space>
       ),
     },
