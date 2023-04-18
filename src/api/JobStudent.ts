@@ -24,3 +24,34 @@ export const submitJob = async (params: any) => {
 export const cancelJob = async (params: any) => {
   return request.post("/server-api/job-student/cancelJob", params);
 };
+
+/**
+ * 获取提交过的岗位列表
+ */
+export const selectJobStudentList = async (pageInfo: any, formParams?: any) => {
+  const res = await request.post(
+    "/server-api/job-student/selectJobStudentList",
+    {
+      ...pageInfo,
+      ...formParams,
+    }
+  );
+  return {
+    total: res?.data?.total ?? 0,
+    list: res?.data?.records ?? [],
+  };
+};
+
+/**
+ * 岗位通过
+ */
+export const jobPass = async (params: any) => {
+  return request.post("/server-api/job-student/jobPass", params);
+};
+
+/**
+ * 岗位被拒
+ */
+export const jobReject = async (params: any) => {
+  return request.post("/server-api/job-student/jobReject", params);
+};

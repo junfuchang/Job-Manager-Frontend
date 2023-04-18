@@ -4,10 +4,12 @@ import { useRequest } from "ahooks";
 import { deleteJob, selectJobList } from "../../api/Job";
 import { useRootStore } from "../../store/RootStore";
 import { observer } from "mobx-react-lite";
-import { FormDialog } from "@formily/antd-v5";
+import { FormDialog, FormDrawer } from "@formily/antd-v5";
 import JobInsertForm from "./job-insert-form";
 import { useRef } from "react";
 import JobUpdateForm from "./job-update-form";
+import JobStudentList from "./job-student-list";
+import { log } from "console";
 
 const Job = () => {
   const { loginStore } = useRootStore();
@@ -32,8 +34,25 @@ const Job = () => {
     flashJobList({ companyId });
   };
 
-  const handleShowJobStudentList = () => {
-    console.log("///");
+  const handleShowJobStudentList = (title: string, jobId: number) => {
+    FormDrawer(
+      {
+        maskClosable: false,
+        footer: false,
+        title: "投递岗位 " + title + " 学生详细信息",
+        width: 1500,
+      },
+      () => (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <JobStudentList jobId={jobId} />
+        </div>
+      )
+    ).open();
   };
 
   return (
@@ -84,19 +103,24 @@ const Job = () => {
                     </div>
                   }
                   hoverable
-                  onClick={handleShowJobStudentList}
                 >
-                  {item.deadline == null || (
-                    <p>
-                      <span style={{ fontWeight: "bold" }}>截止时间：</span>
-                      <span>
-                        {(item.deadline?.toString() ?? "").slice(0, 10)}
-                      </span>
-                    </p>
-                  )}
+                  <div
+                    onClick={() =>
+                      handleShowJobStudentList(item.title, item.jobId)
+                    }
+                  >
+                    {item.deadline == null || (
+                      <p>
+                        <span style={{ fontWeight: "bold" }}>截止时间：</span>
+                        <span>
+                          {(item.deadline?.toString() ?? "").slice(0, 10)}
+                        </span>
+                      </p>
+                    )}
 
-                  <p style={{ fontWeight: "bold" }}>岗位介绍：</p>
-                  <p className="text-ellipsis">{item.intro}</p>
+                    <p style={{ fontWeight: "bold" }}>岗位介绍：</p>
+                    <p className="text-ellipsis">{item.intro}</p>
+                  </div>
                 </Card>
               );
             })}

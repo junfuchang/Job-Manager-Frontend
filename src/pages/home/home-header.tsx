@@ -100,11 +100,11 @@ const HomeHeader: React.FC = (props: HomeHeaderProps) => {
             </Form.Item>
           </div>
           <Form.Item noStyle className="footer-item">
-            <div className="item-button">
+            {/* <div className="item-button">
               <Button block onClick={toggleModal}>
                 取消
               </Button>
-            </div>
+            </div> */}
             <div className="item-button">
               <Button type="primary" block onClick={confirmUpdate}>
                 确认

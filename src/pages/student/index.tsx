@@ -63,11 +63,13 @@ const StudentManager = () => {
       title: "学号",
       key: "studentId",
       dataIndex: "studentId",
+      width: 120,
     },
     {
       title: "姓名",
       key: "name",
       dataIndex: "name",
+      width: 120,
     },
     {
       title: "头像",
@@ -110,6 +112,7 @@ const StudentManager = () => {
       title: "联系方式",
       key: "contact",
       dataIndex: "contact",
+      width: 120,
     },
     {
       title: "出生日期",
@@ -124,16 +127,19 @@ const StudentManager = () => {
       title: "地址",
       key: "address",
       dataIndex: "address",
+      width: 150,
     },
     {
       title: "备注",
       key: "remark",
       dataIndex: "remark",
+      width: 120,
     },
 
     {
       title: "操作",
       key: "action",
+      width: 200,
       render: (_: any, record: any) => (
         <Space size="middle">
           <Button
