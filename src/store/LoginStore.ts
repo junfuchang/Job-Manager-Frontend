@@ -1,3 +1,4 @@
+import { log } from "console";
 import { makeAutoObservable } from "mobx";
 
 export interface MenuList {
@@ -37,7 +38,7 @@ class LoginStore {
     this.setLogout();
 
     this.userInfo = data.userInfo;
-    this.roleInfo = data?.roleInfo;
+    this.roleInfo = data?.roleInfo ?? {};
     this.token = data.token;
     this.menuInfo = data.menuInfo;
 
@@ -75,7 +76,7 @@ class LoginStore {
   get getMenuInfo() {
     return (
       this.menuInfo ??
-      JSON.parse(localStorage.getItem("MENUINFO") || "[]") ??
+      JSON.parse(localStorage.getItem("MENUINFO") ?? "[]") ??
       []
     );
   }
@@ -86,7 +87,7 @@ class LoginStore {
   get getUserInfo() {
     return (
       this.userInfo ??
-      JSON.parse(localStorage.getItem("USERINFO") || "{}") ??
+      JSON.parse(localStorage.getItem("USERINFO") ?? "{}") ??
       ""
     );
   }
@@ -97,7 +98,7 @@ class LoginStore {
   get getRoleInfo() {
     return (
       this.roleInfo ??
-      JSON.parse(localStorage.getItem("ROLEINFO") || "{}") ??
+      JSON.parse(localStorage.getItem("ROLEINFO") ?? "{}") ??
       ""
     );
   }

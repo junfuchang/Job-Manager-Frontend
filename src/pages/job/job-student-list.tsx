@@ -1,28 +1,47 @@
 import { useAntdTable, useRequest } from "ahooks";
-import { Avatar, Button, Space, Table, Tag, message } from "antd";
+import {
+  Avatar,
+  Button,
+  Col,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+  Table,
+  Tag,
+  message,
+} from "antd";
 import { jobPass, jobReject, selectJobStudentList } from "../../api/JobStudent";
 import { FormDrawer } from "@formily/antd-v5";
 import save2PDF from "../../utils/save2PDF";
 import ResumeDisplay from "../../components/resume-display";
 import { useState } from "react";
+const { Option } = Select;
 
 export default function JobStudentList(props: any) {
-  const { studentId, jobId } = props;
+  const { studentId, jobId, companyId, showSearch = false } = props;
+  console.log("props", props);
 
-  const { tableProps: jobStudentListProps } = useAntdTable(
-    selectJobStudentList,
-    {
+  const [form] = Form.useForm();
+
+  const { tableProps: jobStudentListProps, search: jobStudentListSearch } =
+    useAntdTable(selectJobStudentList, {
+      form,
       defaultParams: [
         {
           current: 1,
           pageSize: 20,
           studentId,
           jobId,
+          companyId,
         },
       ],
       defaultPageSize: 20,
-    }
-  );
+      cacheKey: "JobStudentHistoryListCache",
+    });
+
+  const { submit, reset } = jobStudentListSearch;
 
   const columns = [
     // 表格信息
@@ -120,7 +139,7 @@ export default function JobStudentList(props: any) {
                   {
                     footer: false,
                     title: "学生简历详情",
-                    width: 800,
+                    width: "40%",
                     extra: (
                       <Button
                         onClick={() => {
@@ -150,6 +169,46 @@ export default function JobStudentList(props: any) {
   ];
   return (
     <>
+      {showSearch ? (
+        <Form form={form}>
+          <Row gutter={24}>
+            <Col span={4}>
+              <Form.Item label="岗位名称" name="jobName">
+                <Input placeholder="岗位名称" />
+              </Form.Item>
+            </Col>
+            <Col span={4}>
+              <Form.Item label="岗位ID" name="jobId">
+                <Input placeholder="岗位ID" />
+              </Form.Item>
+            </Col>
+            <Col span={4}>
+              <Form.Item label="通过情况" name="feedback" initialValue={0}>
+                <Select>
+                  <Option value={-1}>全部</Option>
+                  <Option value={0}>待回复</Option>
+                  <Option value={1}>已拒绝</Option>
+                  <Option value={2}>已通过</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24} justify="space-between" style={{ marginBottom: 24 }}>
+            <Col>
+              <span></span>
+            </Col>
+            <Col>
+              <Button type="primary" onClick={submit}>
+                搜索
+              </Button>
+              <Button onClick={reset} style={{ marginLeft: 16 }}>
+                重置
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      ) : undefined}
+
       <Table
         columns={columns}
         rowKey="jobStudentId"

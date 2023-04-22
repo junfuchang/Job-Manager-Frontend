@@ -59,7 +59,7 @@ const ZjMap: React.FC = (props) => {
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
 
   const option: any = {
-    backgroundColor: "#1D346F",
+    backgroundColor: "#202b53",
     title: {
       text: "毕业生杭州市就业分布",
       subtext: "",
@@ -95,6 +95,16 @@ const ZjMap: React.FC = (props) => {
       show: true,
       map: "zhejiang",
       roam: true,
+      scaleLimit: {
+        max: 8,
+        min: 0.5,
+      },
+      zoom: 3,
+      center: [120.147376, 30.272934],
+      nameMap: {
+        上城区: 3001,
+      },
+      selectedMode: false,
       emphasis: {
         areaColor: "#2a333d",
         itemStyle: {
@@ -157,7 +167,7 @@ const ZjMap: React.FC = (props) => {
           scale: true,
           itemStyle: {
             areaColor: "#1D346F",
-            borderColor: "#D79D3D",
+            borderColor: "red",
           },
         },
 
@@ -196,7 +206,7 @@ const ZjMap: React.FC = (props) => {
           areaColor: "#0f2c70",
           itemStyle: {
             areaColor: "#1D346F",
-            borderColor: "#D79D3D",
+            borderColor: "red",
           },
         },
         zlevel: 1,

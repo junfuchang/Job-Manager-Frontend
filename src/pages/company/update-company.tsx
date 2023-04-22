@@ -16,7 +16,7 @@ import {
 import { createForm } from "@formily/core";
 import { createSchemaField } from "@formily/react";
 import { Card, message } from "antd";
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 import { useRootStore } from "../../store/RootStore";
 import { action } from "@formily/reactive";
 import { observer } from "mobx-react-lite";
@@ -173,8 +173,24 @@ const schema = {
   "x-designable-id": "mhmu7kadukf",
 };
 
-const UpdateCompany = (props: { record: any; flashList: Function }) => {
+const UpdateCompany = (
+  props: { record: any; flashList?: Function },
+  ref: any
+) => {
   const { record, flashList } = props;
+
+  // 方法暴露
+  useImperativeHandle(
+    ref,
+    () => ({
+      submit() {
+        const values = updateCompanyForm.values;
+        handleSubmit(values);
+        return values;
+      },
+    }),
+    []
+  );
 
   const SchemaField = createSchemaField({
     components: {
@@ -192,7 +208,7 @@ const UpdateCompany = (props: { record: any; flashList: Function }) => {
     scope: {},
   });
 
-  const updateStudentForm = React.useMemo(
+  const updateCompanyForm = React.useMemo(
     () =>
       createForm({
         initialValues: record,
@@ -216,7 +232,7 @@ const UpdateCompany = (props: { record: any; flashList: Function }) => {
   };
 
   return (
-    <Form form={updateStudentForm}>
+    <Form form={updateCompanyForm}>
       <FormLayout labelCol={6} wrapperCol={14}>
         <SchemaField schema={schema} />
         <FormDrawer.Extra>
@@ -229,4 +245,4 @@ const UpdateCompany = (props: { record: any; flashList: Function }) => {
   );
 };
 
-export default observer(UpdateCompany);
+export default observer(forwardRef(UpdateCompany));

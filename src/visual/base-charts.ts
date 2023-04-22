@@ -32,6 +32,17 @@ class BaseChart {
     if (this._chartRef.current) {
       this._chart = echarts.init(this._chartRef.current, "chalk");
       this._chart.setOption(this._data);
+
+      // 大小自适应
+      if (this._chartRef.current?.parentElement) {
+        this._chartRef.current.parentElement.onresize = () => {
+          this._chart.resize();
+        };
+      }
+
+      window.onresize = () => {
+        this._chart.resize();
+      };
     }
   }
 }

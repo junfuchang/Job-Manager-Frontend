@@ -1,15 +1,13 @@
 import { Button, Card, Col, Popconfirm, Row, Space, message } from "antd";
-import "./index.scss";
 import { useRequest } from "ahooks";
 import { deleteJob, selectJobList } from "../../api/Job";
 import { useRootStore } from "../../store/RootStore";
 import { observer } from "mobx-react-lite";
-import { FormDialog, FormDrawer } from "@formily/antd-v5";
+import { FormDrawer } from "@formily/antd-v5";
 import JobInsertForm from "./job-insert-form";
-import { useRef } from "react";
 import JobUpdateForm from "./job-update-form";
 import JobStudentList from "./job-student-list";
-import { log } from "console";
+import "./index.scss";
 
 const Job = () => {
   const { loginStore } = useRootStore();
@@ -40,7 +38,7 @@ const Job = () => {
         maskClosable: false,
         footer: false,
         title: "投递岗位 " + title + " 学生详细信息",
-        width: 1500,
+        width: "80%",
       },
       () => (
         <div

@@ -5,10 +5,10 @@ import { SettingFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useRootStore } from "../../store/RootStore";
 import "./index.scss";
+import UpdatePassword from "../../components/update-password";
 
 interface HomeHeaderProps {}
 
-const passwordValidator = null;
 const items: MenuProps["items"] = [
   {
     label: "修改密码",
@@ -69,7 +69,8 @@ const HomeHeader: React.FC = (props: HomeHeaderProps) => {
         footer={null}
         onCancel={toggleModal}
       >
-        <Form
+        <UpdatePassword />
+        {/* <Form
           name="edit-pwd-form"
           form={form}
           autoComplete="off"
@@ -100,18 +101,13 @@ const HomeHeader: React.FC = (props: HomeHeaderProps) => {
             </Form.Item>
           </div>
           <Form.Item noStyle className="footer-item">
-            {/* <div className="item-button">
-              <Button block onClick={toggleModal}>
-                取消
-              </Button>
-            </div> */}
             <div className="item-button">
               <Button type="primary" block onClick={confirmUpdate}>
                 确认
               </Button>
             </div>
           </Form.Item>
-        </Form>
+        </Form> */}
       </Modal>
     </>
   );

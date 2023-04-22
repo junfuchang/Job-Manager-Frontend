@@ -1,16 +1,18 @@
 import { useRequest } from "ahooks";
-import { Button, Col, Descriptions, Row, message } from "antd";
+import { Alert, Button, Col, Descriptions, Row, message } from "antd";
 import { alreadySubmitJob, cancelJob, submitJob } from "../../api/JobStudent";
+import { spawn } from "child_process";
 
 interface IJobDetail {
   studentId: number;
   record: any;
+  canSubmit?: boolean;
 }
 
 const JobDetail = (props: IJobDetail) => {
-  const { studentId, record } = props;
+  const { studentId, record, canSubmit = true } = props;
 
-  const { data: isAlreadySubmitJob, run: flash } = useRequest(
+  const { data: submitJobInfo, run: flash } = useRequest(
     () => alreadySubmitJob({ jobId: record?.jobId, studentId }),
     {
       refreshDeps: [record?.jobId, studentId],
@@ -44,18 +46,45 @@ const JobDetail = (props: IJobDetail) => {
         bordered
         layout="vertical"
         extra={
-          isAlreadySubmitJob ? (
-            <Button
-              danger
-              onClick={() => {
-                fetchCancelJob({
-                  jobId: record?.jobId,
-                  studentId: 1,
-                });
-              }}
-            >
-              取消投递
-            </Button>
+          !canSubmit ||
+          (submitJobInfo?.already ? (
+            submitJobInfo.feedback === 0 ? (
+              <>
+                <Alert
+                  message="已投递简历，请等待反馈！"
+                  type="info"
+                  showIcon
+                />
+                <Button
+                  danger
+                  onClick={() => {
+                    fetchCancelJob({
+                      jobId: record?.jobId,
+                      studentId: 1,
+                    });
+                  }}
+                >
+                  取消投递
+                </Button>
+              </>
+            ) : (
+              <>
+                {submitJobInfo.feedback === 2 || (
+                  <Alert
+                    message="抱歉您未通过企业初筛！"
+                    type="error"
+                    showIcon
+                  />
+                )}
+                {submitJobInfo.feedback === 1 || (
+                  <Alert
+                    message="恭喜您已通过初筛！请耐心等待企业联系。"
+                    type="success"
+                    showIcon
+                  />
+                )}
+              </>
+            )
           ) : (
             <Button
               type="primary"
@@ -68,8 +97,9 @@ const JobDetail = (props: IJobDetail) => {
             >
               投递简历
             </Button>
-          )
+          ))
         }
+
         // column={{ xxl: 3, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
       >
         <Descriptions.Item label="薪资">{record?.salary}</Descriptions.Item>

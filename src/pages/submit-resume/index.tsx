@@ -19,7 +19,8 @@ import JobDetail from "./job-detail";
 
 const { Option } = Select;
 
-const SubmitResume = () => {
+const SubmitResume = (props: any) => {
+  const { isAdminPage = false } = props;
   const [form] = Form.useForm();
   const [active, setActive] = useState<any>();
   const { loginStore } = useRootStore();
@@ -130,7 +131,7 @@ const SubmitResume = () => {
               <Form.Item
                 label="岗位开启"
                 name="isOpenAndTimely"
-                initialValue={1}
+                initialValue={isAdminPage ? -1 : 1}
               >
                 <Select>
                   <Option value={-1}>全部</Option>
@@ -168,7 +169,8 @@ const SubmitResume = () => {
         <div className="right">
           {active?.jobId ? (
             <JobDetail
-              studentId={loginStore.getRoleInfo?.studentId}
+              canSubmit={!isAdminPage}
+              studentId={loginStore?.getRoleInfo?.studentId}
               record={active}
             />
           ) : (

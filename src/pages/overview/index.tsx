@@ -1,5 +1,9 @@
-import React from "react";
-const Config = () => {
-  <>overview</>;
-};
-export default Config;
+import { HzMap } from "../../visual";
+
+export default function Overview(props: any) {
+  return (
+    <>
+      <HzMap />
+    </>
+  );
+}

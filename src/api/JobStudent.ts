@@ -8,7 +8,11 @@ export const alreadySubmitJob = async (params: any) => {
     "/server-api/job-student/alreadySubmitJob",
     params
   );
-  return res?.data ?? false;
+  return {
+    already: res?.data ?? false,
+    feedback: res?.data?.feedback ?? 0,
+    date: res?.data?.date,
+  };
 };
 
 /**

@@ -1,6 +1,7 @@
 import { message } from "antd";
 import axios from "axios";
 import loginStore from "../store/LoginStore";
+import { logout } from "../utils/storeUtils";
 
 const instance = axios.create({
   timeout: 300000,
@@ -29,6 +30,10 @@ instance.interceptors.response.use(
     return res;
   },
   (error) => {
+    if (error?.code === 401) {
+      message.warning("登录失效请重新登陆！");
+      logout();
+    }
     return Promise.reject(error);
   }
 );

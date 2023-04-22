@@ -16,7 +16,7 @@ import {
 import { createForm } from "@formily/core";
 import { createSchemaField } from "@formily/react";
 import { Card, message } from "antd";
-import React from "react";
+import React, { Ref, forwardRef, useImperativeHandle } from "react";
 import { useRootStore } from "../../store/RootStore";
 import { action } from "@formily/reactive";
 import { observer } from "mobx-react-lite";
@@ -437,9 +437,30 @@ const schema = {
   "x-designable-id": "2b7r5slmw64",
 };
 
-const UpdateStudent = (props: { record: any; flashList: Function }) => {
+const UpdateStudent = (
+  props: { record: any; flashList?: Function },
+  ref: any
+) => {
   const { record, flashList } = props;
-  const { schoolStore, commonStore } = useRootStore();
+  const { schoolStore, commonStore, loginStore } = useRootStore();
+
+  // 方法暴露
+  useImperativeHandle(
+    ref,
+    () => ({
+      submit() {
+        const values = updateStudentForm.values;
+        handleSubmit(values);
+        return {
+          ...values,
+          majorId: values?.majorId?.[1],
+          city: values?.city?.join(","),
+          graduateFlag: Number(values?.graduateFlag),
+        };
+      },
+    }),
+    []
+  );
 
   const SchemaField = createSchemaField({
     components: {
@@ -520,4 +541,4 @@ const UpdateStudent = (props: { record: any; flashList: Function }) => {
   );
 };
 
-export default observer(UpdateStudent);
+export default observer(forwardRef(UpdateStudent));

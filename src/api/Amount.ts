@@ -38,3 +38,10 @@ export const updateAmount = async (params: any) => {
 export const insertAmount = async (params: any) => {
   return request.post("/server-api/amount/insertAmount", params);
 };
+
+/**
+ * 修改密码
+ */
+export const updatePassword = async (params: any) => {
+  return request.post("/server-api/amount/updatePassword", params);
+};

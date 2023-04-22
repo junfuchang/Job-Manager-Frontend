@@ -24,11 +24,6 @@ const CompanyManager = () => {
   const { tableProps: companyListProps, search: companyListSearch } =
     useAntdTable(selectCompanyList, {
       form,
-      onBefore(params: any) {
-        // if (params[1]?.majorId?.length) {
-        //   params[1].majorId = params[1].majorId[1];
-        // }
-      },
       defaultParams: [
         {
           current: 1,
@@ -126,7 +121,7 @@ const CompanyManager = () => {
           >
             编辑
           </Button>
-          <Button size="small">查看岗位</Button>
+          {/* <Button size="small">查看岗位</Button> */}
         </Space>
       ),
     },
