@@ -3,14 +3,15 @@ import BaseChart from "./base-charts";
 import * as echarts from "echarts";
 import geoJson from "./hz-map-json.json";
 
+type IGeoCoordMap = Record<string, number[]>;
+
 echarts.registerMap("zhejiang", geoJson as any);
 
-let max = 480,
-  min = 9;
-let maxSize4Pin = 100,
-  minSize4Pin = 20;
+const max = 480;
+const min = 0;
+const maxSize4Pin = 180;
+const minSize4Pin = 24;
 
-type IGeoCoordMap = Record<string, number[]>;
 let geoCoordMap: IGeoCoordMap = {
   上城区: [120.171465, 30.250236],
   拱墅区: [120.150053, 30.314697],
@@ -25,20 +26,20 @@ let geoCoordMap: IGeoCoordMap = {
   桐庐县: [119.685045, 29.797437],
   淳安县: [119.044276, 29.604177],
 };
-let data = [
-  { name: "上城区", value: 199 },
-  { name: "拱墅区", value: 39 },
-  { name: "西湖区", value: 152 },
-  { name: "滨江区", value: 299 },
-  { name: "萧山区", value: 89 },
-  { name: "余杭区", value: 52 },
-  { name: "富阳区", value: 9 },
-  { name: "临安区", value: 352 },
-  { name: "钱塘区", value: 99 },
-  { name: "临平区", value: 39 },
-  { name: "桐庐县", value: 480 },
-  { name: "淳安县", value: 40 },
-];
+// let data = [
+//   { name: "上城区", value: 199 },
+//   { name: "拱墅区", value: 39 },
+//   { name: "西湖区", value: 152 },
+//   { name: "滨江区", value: 299 },
+//   { name: "萧山区", value: 89 },
+//   { name: "余杭区", value: 52 },
+//   { name: "富阳区", value: 9 },
+//   { name: "临安区", value: 352 },
+//   { name: "钱塘区", value: 99 },
+//   { name: "临平区", value: 39 },
+//   { name: "桐庐县", value: 480 },
+//   { name: "淳安县", value: 40 },
+// ];
 
 let convertData = (data: any) => {
   let res = [];
@@ -54,7 +55,13 @@ let convertData = (data: any) => {
   return res;
 };
 
-const ZjMap: React.FC = (props) => {
+const ZjMap = (props: any) => {
+  const { mapData = {} } = props;
+  const data = Object.entries(mapData).map((i) => ({
+    name: i[0],
+    value: i[1],
+  }));
+
   const ref =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
 
@@ -66,6 +73,7 @@ const ZjMap: React.FC = (props) => {
       x: "center",
       textStyle: {
         color: "#ccc",
+        fontSize: 28,
       },
     },
     tooltip: {
@@ -81,7 +89,7 @@ const ZjMap: React.FC = (props) => {
     visualMap: {
       show: false,
       min: 0,
-      max: 500,
+      // max: 500,
       left: "left",
       top: "bottom",
       text: ["高", "低"], // 文本，默认为数值文本
@@ -101,9 +109,6 @@ const ZjMap: React.FC = (props) => {
       },
       zoom: 3,
       center: [120.147376, 30.272934],
-      nameMap: {
-        上城区: 3001,
-      },
       selectedMode: false,
       emphasis: {
         areaColor: "#2a333d",
@@ -121,28 +126,29 @@ const ZjMap: React.FC = (props) => {
       },
     },
     series: [
-      {
-        type: "map",
-        map: "zhejiang",
-        geoIndex: 0,
-        aspectScale: 0.75, //长宽比
-        showLegendSymbol: false, // 存在legend时显示
-        roam: true,
-        emphasis: {
-          areaColor: "#0f2c70",
-          itemStyle: {
-            areaColor: "#1D346F",
-            borderColor: "#D79D3D",
-          },
-          label: {
-            show: false,
-            color: "#fff",
-          },
-        },
-        zoom: 3,
-        animation: true,
-        data: data,
-      },
+      // {
+      //   type: "map",
+      //   map: "zhejiang",
+      //   geoIndex: 0,
+      //   aspectScale: 0.75, //长宽比
+      //   showLegendSymbol: false, // 存在legend时显示
+      //   roam: true,
+      //   emphasis: {
+      //     areaColor: "#0f2c70",
+      //     itemStyle: {
+      //       areaColor: "#1D346F",
+      //       borderColor: "#D79D3D",
+      //     },
+      //     label: {
+      //       show: false,
+      //       color: "#fff",
+      //     },
+      //   },
+      //   zoom: 3,
+      //   animation: true,
+      //   data: data,
+      // },
+      // 数字框
       {
         name: "点",
         type: "scatter",
@@ -178,6 +184,7 @@ const ZjMap: React.FC = (props) => {
         },
         zlevel: 6,
       },
+      // 黄色圆环
       {
         name: "Top 5",
         type: "effectScatter",
@@ -217,7 +224,7 @@ const ZjMap: React.FC = (props) => {
   useEffect(() => {
     const zjmap = new BaseChart({ chartRef: ref, data: option });
     return () => zjmap.destory();
-  }, []);
+  }, [mapData]);
 
   return <div ref={ref} style={{ width: "100%", height: "100%" }} />;
 };

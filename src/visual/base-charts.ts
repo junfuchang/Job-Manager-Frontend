@@ -28,6 +28,10 @@ class BaseChart {
     this._chart.dispose();
   }
 
+  public getChart() {
+    return this._chart;
+  }
+
   public init() {
     if (this._chartRef.current) {
       this._chart = echarts.init(this._chartRef.current, "chalk");
