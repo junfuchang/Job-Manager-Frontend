@@ -1,23 +1,69 @@
 import { useEffect, useRef } from "react";
 import BaseChart from "./base-charts";
 import * as echarts from "echarts";
+import { log } from "console";
 
 // var data = [80, 70, 30, 85, 25];
 // var indicatorname = ["0~3k", "3~6k", "6~9k", "9~12k", "大于12k"];
-// var maxdata = [100, 100, 100, 100, 100];
+var maxdata = [100, 100, 100, 100, 100];
+const salaryType = ["0~3k", "3~6k", "6~9k", "9~12k", "大于12k"];
+const genderType: any = {
+  0: {
+    1: "待业(男)",
+    0: "待业(女)",
+  },
+  1: {
+    1: "就业(男)",
+    0: "就业(女)",
+  },
+  2: {
+    1: "升学(男)",
+    0: "升学(女)",
+  },
+};
 
 const Radar = (props: any) => {
-  const {
-    list = [80, 70, 30, 85, 25],
-    names = ["0~3k", "3~6k", "6~9k", "9~12k", "大于12k"],
-    max = [100, 100, 100, 100],
-  } = props;
+  const { type, resData } = props;
   const ref =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
 
-  const data = list;
-  const indicatorname = names;
-  const maxdata = max;
+  let data = [80, 70, 12, 13, 45];
+  let indicatorname = salaryType;
+
+  switch (type) {
+    case "salary":
+      if (resData) {
+        indicatorname = Object.keys(resData).map(
+          (i: any) => salaryType[i.slice(-1)]
+        );
+        const value = Object.values(resData);
+        let total = value.reduce((p: any, c: any) => p + c, 0);
+        total = total === 0 ? 1 : total;
+        data = value.map((i: any) => Math.round((i / (total as any)) * 100));
+      }
+      break;
+    case "gender":
+      if (resData) {
+        const indicatornameTemp: any = [];
+        const dataTemp: any = [];
+        Object.entries(resData).forEach((i: any) => {
+          i[1].forEach((j: any) => {
+            indicatornameTemp.push(genderType[i[0]][j["genderType"]]);
+            dataTemp.push(j["genderCount"]);
+          });
+        });
+
+        let total = dataTemp.reduce((p: any, c: any) => p + c, 0);
+        total = total === 0 ? 1 : total;
+
+        indicatorname = indicatornameTemp;
+        data = dataTemp.map((i: any) => Math.round((i / (total as any)) * 100));
+      }
+
+      break;
+    default:
+      break;
+  }
 
   let indicator: any[] = [];
   for (var i = 0; i < indicatorname.length; i++) {
@@ -200,7 +246,7 @@ const Radar = (props: any) => {
   useEffect(() => {
     const rose = new BaseChart({ chartRef: ref, data: option });
     return () => rose.destory();
-  }, [list]);
+  }, [resData, type]);
 
   return <div ref={ref} style={{ width: "100%", height: "100%" }} />;
 };

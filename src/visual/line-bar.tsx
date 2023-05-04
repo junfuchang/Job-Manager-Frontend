@@ -5,17 +5,42 @@ import * as echarts from "echarts";
 export default function LinnBar(props: any) {
   const { data } = props;
 
+  let dataX: any = [];
+  let dataJY: any = [];
+  let dataBY: any = [];
+  let dataRate: any = [];
+
+  if (data) {
+    Object.entries(data)
+      .sort()
+      .map((i: any) => {
+        dataX.push(i[0]);
+        dataJY.push(i[1]?.jyCount);
+        dataBY.push(i[1]?.totalCount);
+        dataRate.push(
+          Math.round(((i[1]?.jyCount ?? 0) / (i[1]?.jyCount ?? 1)) * 10000) /
+            100
+        );
+      });
+  }
+
   const ref =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
 
-  let unit = "(万亩)";
   const option = {
     backgroundColor: "#0f375f",
+    title: {
+      text: "近三年全校就业情况",
+      subtext: "",
+      x: "center",
+      textStyle: {
+        color: "white",
+      },
+    },
     grid: {
       left: "5%",
       right: "3%",
       bottom: "5%",
-
       containLabel: true,
     },
     tooltip: {
@@ -23,7 +48,7 @@ export default function LinnBar(props: any) {
       trigger: "axis",
     },
     xAxis: {
-      data: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      data: dataX,
       axisLabel: {
         //坐标轴标签样式
         color: "#fff",
@@ -35,7 +60,8 @@ export default function LinnBar(props: any) {
     },
     yAxis: [
       {
-        name: unit,
+        name: "人数",
+        minInterval: 1,
         nameTextStyle: {
           //坐标轴名字样式
           color: "#fff",
@@ -55,7 +81,10 @@ export default function LinnBar(props: any) {
       },
       {
         type: "value",
-        name: unit,
+        name: "毕业率",
+        min: 0,
+        max: 100,
+        minInterval: 1,
         nameTextStyle: {
           color: "#fff",
         },
@@ -66,10 +95,10 @@ export default function LinnBar(props: any) {
     ],
     series: [
       {
-        name: "规划面积",
+        name: "就业与升学人数",
         type: "bar",
         barWidth: "15", //柱条宽度
-        data: [220, 182, 191, 234, 290, 330, 310],
+        data: dataJY,
 
         itemStyle: {
           //图形的样式
@@ -95,10 +124,10 @@ export default function LinnBar(props: any) {
         },
       },
       {
-        name: "建成面积",
+        name: "该年毕业人数",
         type: "bar",
         barWidth: "15", //柱条宽度
-        data: [320, 282, 91, 134, 190, 230, 410],
+        data: dataBY,
 
         itemStyle: {
           //图形的样式
@@ -124,11 +153,11 @@ export default function LinnBar(props: any) {
         },
       },
       {
-        name: "新增面积",
+        name: "毕业率",
         type: "line",
         yAxisIndex: 1,
         symbolSize: 8,
-        data: [1.0, 1.2, 2.3, 3.5, 4.3, 8.2, 10.3, 22.4, 23.0, 14.5, 10.0, 5.2],
+        data: dataRate,
         itemStyle: {
           color: "#4574EB",
         },
@@ -139,7 +168,7 @@ export default function LinnBar(props: any) {
   useEffect(() => {
     const rose = new BaseChart({ chartRef: ref, data: option });
     return () => rose.destory();
-  }, []);
+  }, [data]);
 
   return <div ref={ref} style={{ width: "100%", height: "100%" }} />;
 }

@@ -64,3 +64,12 @@ export const selectRateData = async () => {
   }
   return {};
 };
+
+/**
+ * 获取最近五年全校的就业情况
+ */
+export const selectRateByYear = async () => {
+  const res = await request.post("/server-api/overview/rateByYear");
+  console.log("res.data", res.data);
+  return res?.data ?? {};
+};

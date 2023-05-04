@@ -65,9 +65,6 @@ export default function Overview(props: any) {
     ],
   });
 
-  console.log("overviewInfo", overviewInfo);
-  console.log("mapData", mapData);
-
   return (
     <div className="overview">
       <div className="map">
@@ -94,10 +91,10 @@ export default function Overview(props: any) {
       <div className="right-panel">
         <Panel>
           <Card cardText="毕业生薪资分布">
-            <Radar />
+            <Radar type="salary" resData={overviewInfo?.salary} />
           </Card>
           <Card cardText="毕业生就业性别分布">
-            <Radar />
+            <Radar type="gender" resData={overviewInfo?.gender} />
           </Card>
         </Panel>
       </div>

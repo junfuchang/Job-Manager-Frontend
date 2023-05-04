@@ -56,11 +56,13 @@ class LoginStore {
     this.roleInfo = null;
     this.token = undefined;
     this.menuInfo = undefined;
+    this.routePath = "overview";
 
     localStorage.removeItem("TOKEN");
     localStorage.removeItem("MENUINFO");
     localStorage.removeItem("USERINFO");
     localStorage.removeItem("ROLEINFO");
+    localStorage.removeItem("routePath");
   }
 
   /**

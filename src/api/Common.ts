@@ -19,3 +19,8 @@ export const getOverviewMap = async (params: any) => {
   const res = await request.post("/server-api/overview/map", params);
   return res?.data ?? {};
 };
+
+export const getOverviewDetailNum = async (params: any) => {
+  const res = await request.post("/server-api/overview/detailNum", params);
+  return res?.data ?? {};
+};

@@ -1,11 +1,12 @@
-import { Card } from "antd";
+import "./index.scss";
 
 export default function NumBox(props: any) {
-  const { title } = props;
+  const { title, num } = props;
   return (
-    <Card>
-      {title ? <p>{title}</p> : null}
+    <div className="numbox">
+      <p className="numboxTitle">{title}</p>
+      <p className="numboxNum">{num}</p>
       {props.children}
-    </Card>
+    </div>
   );
 }

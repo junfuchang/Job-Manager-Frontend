@@ -3,33 +3,37 @@ import NumBox from "./components/num-box";
 import "./index.scss";
 import LinnBar from "../../visual/line-bar";
 import CollegeBar from "../../visual/college-bar";
-import { useEffect, useState } from "react";
 import { useRequest } from "ahooks";
-import { useRootStore } from "../../store/RootStore";
-import { observer } from "mobx-react-lite";
-import { selectRateData } from "../../api/College";
+import { selectRateByYear, selectRateData } from "../../api/College";
+import { getOverviewDetailNum } from "../../api/Common";
 
 const OvervireDetail = () => {
   const { data: rateData } = useRequest(selectRateData);
+  const { data: rateByYear } = useRequest(selectRateByYear);
+  const { data: detailNum } = useRequest(getOverviewDetailNum);
+  console.log("detailNum", detailNum);
 
   return (
     <div className="overview-detail">
       <div className="overview-detail-bar">
         <Row gutter={16}>
-          <Col span={8}>
-            <NumBox title="今年毕业人数">888</NumBox>
+          <Col span={6}>
+            <NumBox title="本年毕业人数" num={detailNum?.graduateNum ?? 0} />
           </Col>
-          <Col span={8}>
-            <Card title={"今年毕业人数" + "12"}></Card>
+          <Col span={6}>
+            <NumBox title="学生简历投岗总数" num={detailNum?.submitNum ?? 0} />
           </Col>
-          <Col span={8}>
-            <Card title={"今年毕业人数" + "12"}></Card>
+          <Col span={6}>
+            <NumBox title="已发布岗位总数" num={detailNum?.jobNum ?? 0} />
+          </Col>
+          <Col span={6}>
+            <NumBox title="已入驻企业数量" num={detailNum?.companyNum ?? 0} />
           </Col>
         </Row>
       </div>
       <div className="overview-detail-content">
         <div className="content-left">
-          <LinnBar />
+          <LinnBar data={rateByYear} />
         </div>
         <div className="content-right">
           <CollegeBar data={rateData} />

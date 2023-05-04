@@ -87,6 +87,7 @@ export default function CollegeBar({ data = {} }: any) {
           color: "#fff",
           fontSize: 12,
         },
+        minInterval: 1,
         type: "value",
         splitLine: {
           lineStyle: {
@@ -111,6 +112,7 @@ export default function CollegeBar({ data = {} }: any) {
         name: "就业率",
         min: 0,
         max: 100,
+        minInterval: 1,
         nameTextStyle: {
           color: "#fff",
         },

@@ -40,9 +40,7 @@ const HomeHeader: React.FC = (props: HomeHeaderProps) => {
     }
   };
 
-  const confirmUpdate = () => {
-    console.log("form", form.getFieldValue);
-  };
+  // const confirmUpdate = () => {};
 
   const logout = () => {
     loginStore.setLogout();

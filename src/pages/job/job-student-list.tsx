@@ -21,7 +21,6 @@ const { Option } = Select;
 
 export default function JobStudentList(props: any) {
   const { studentId, jobId, companyId, showSearch = false } = props;
-  console.log("props", props);
 
   const [form] = Form.useForm();
 
