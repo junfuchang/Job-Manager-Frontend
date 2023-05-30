@@ -271,29 +271,29 @@ const InsertCompanyForm = (props: any) => {
             "x-designable-id": "itfu0uwol5z",
             "x-index": 8,
           },
-          pic: {
-            type: "Array<object>",
-            title: "公司照片",
-            "x-decorator": "FormItem",
-            "x-component": "Upload",
-            "x-component-props": {
-              textContent: "上传图片",
-              listType: "picture",
-              beforeUpload: (file: UploadFile) => {
-                companyPic.current.append("file", file as RcFile);
-                return false;
-              },
-              style: {
-                borderRadius: "5px 5px 5px 5px",
-              },
-              action: "/server-api/file/upload/img",
-              maxCount: 1,
-            },
-            "x-validator": [],
-            "x-decorator-props": {},
-            "x-designable-id": "pic",
-            "x-index": 9,
-          },
+          // pic: {
+          //   type: "Array<object>",
+          //   title: "公司照片",
+          //   "x-decorator": "FormItem",
+          //   "x-component": "Upload",
+          //   "x-component-props": {
+          //     textContent: "上传图片",
+          //     listType: "picture",
+          //     beforeUpload: (file: UploadFile) => {
+          //       companyPic.current.append("file", file as RcFile);
+          //       return false;
+          //     },
+          //     style: {
+          //       borderRadius: "5px 5px 5px 5px",
+          //     },
+          //     action: "/server-api/file/upload/img",
+          //     maxCount: 1,
+          //   },
+          //   "x-validator": [],
+          //   "x-decorator-props": {},
+          //   "x-designable-id": "pic",
+          //   "x-index": 9,
+          // },
           remark: {
             type: "string",
             title: "备注",

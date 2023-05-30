@@ -55,7 +55,7 @@ const SubmitResumeHistory = () => {
       width: 150,
     },
     {
-      title: "岗位名称",
+      title: "公司名称",
       key: "company",
       dataIndex: "company",
       width: 150,

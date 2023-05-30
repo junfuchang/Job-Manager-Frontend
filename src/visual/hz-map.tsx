@@ -7,9 +7,9 @@ type IGeoCoordMap = Record<string, number[]>;
 
 echarts.registerMap("zhejiang", geoJson as any);
 
-const max = 480;
+const max = 10;
 const min = 0;
-const maxSize4Pin = 180;
+const maxSize4Pin = 60;
 const minSize4Pin = 24;
 
 let geoCoordMap: IGeoCoordMap = {

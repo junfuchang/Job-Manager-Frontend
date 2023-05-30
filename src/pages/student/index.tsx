@@ -71,20 +71,20 @@ const StudentManager = () => {
       dataIndex: "name",
       width: 120,
     },
-    {
-      title: "头像",
-      key: "avatar",
-      dataIndex: "avatar",
-      width: 70,
-      render: (_: any, record: any) => (
-        <Avatar
-          shape="square"
-          src={record?.avatar}
-          style={{ backgroundColor: "#87d068" }}
-          icon={<UserOutlined />}
-        />
-      ),
-    },
+    // {
+    //   title: "头像",
+    //   key: "avatar",
+    //   dataIndex: "avatar",
+    //   width: 70,
+    //   render: (_: any, record: any) => (
+    //     <Avatar
+    //       shape="square"
+    //       src={record?.avatar}
+    //       style={{ backgroundColor: "#87d068" }}
+    //       icon={<UserOutlined />}
+    //     />
+    //   ),
+    // },
     {
       title: "专业",
       key: "majorName",
@@ -127,7 +127,7 @@ const StudentManager = () => {
       title: "地址",
       key: "address",
       dataIndex: "address",
-      width: 150,
+      width: 130,
     },
     {
       title: "备注",
@@ -139,7 +139,7 @@ const StudentManager = () => {
     {
       title: "操作",
       key: "action",
-      width: 200,
+      // width: 200,
       render: (_: any, record: any) => (
         <Space size="middle">
           <Button

@@ -16,6 +16,7 @@ import { useState } from "react";
 import "./index.scss";
 import { selectJobList } from "../../api/Job";
 import JobDetail from "./job-detail";
+import EmptyTip from "../../components/empty-tip";
 
 const { Option } = Select;
 
@@ -170,11 +171,13 @@ const SubmitResume = (props: any) => {
           {active?.jobId ? (
             <JobDetail
               canSubmit={!isAdminPage}
-              studentId={loginStore?.getRoleInfo?.studentId}
+              studentId={
+                isAdminPage ? null : loginStore?.getRoleInfo?.studentId
+              }
               record={active}
             />
           ) : (
-            <div>岗位详细信息</div>
+            <EmptyTip tip="点击右侧岗位详细信息以展示">岗位详细信息</EmptyTip>
           )}
         </div>
       </div>

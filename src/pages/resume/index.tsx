@@ -21,20 +21,10 @@ const Resume = () => {
     if (loginStore.getRoleInfo?.resume != null) {
       setText(loginStore.getRoleInfo?.resume);
     } else {
-      setText(`#  姓名
-      **基本信息介绍**
-
-      ## 专业技能
-      1. ...
-      2. ...
-
-      ## 项目经历
-      * ...
-      * ...
-
-      ## 个人优势
-      - ...
-      - ...`);
+      setText(`# 姓名\n > 基本信息介绍
+      \n## 专业技能\n1. ...\n2. ...
+      \n## 项目经历\n* ...\n* ...
+      \n## 个人优势\n- ...\n- ...`);
     }
   }, []);
 

@@ -1,7 +1,8 @@
 import { useRequest } from "ahooks";
-import { Alert, Button, Col, Descriptions, Row, message } from "antd";
+import { Alert, Button, Col, Descriptions, Row, Space, message } from "antd";
 import { alreadySubmitJob, cancelJob, submitJob } from "../../api/JobStudent";
 import { spawn } from "child_process";
+import { useEffect } from "react";
 
 interface IJobDetail {
   studentId: number;
@@ -15,6 +16,7 @@ const JobDetail = (props: IJobDetail) => {
   const { data: submitJobInfo, run: flash } = useRequest(
     () => alreadySubmitJob({ jobId: record?.jobId, studentId }),
     {
+      manual: true,
       refreshDeps: [record?.jobId, studentId],
     }
   );
@@ -39,6 +41,12 @@ const JobDetail = (props: IJobDetail) => {
     },
   });
 
+  useEffect(() => {
+    if (studentId) {
+      flash();
+    }
+  }, [record, studentId]);
+
   return (
     <div>
       <Descriptions
@@ -49,7 +57,7 @@ const JobDetail = (props: IJobDetail) => {
           !canSubmit ||
           (submitJobInfo?.already ? (
             submitJobInfo.feedback === 0 ? (
-              <>
+              <Space>
                 <Alert
                   message="已投递简历，请等待反馈！"
                   type="info"
@@ -60,13 +68,13 @@ const JobDetail = (props: IJobDetail) => {
                   onClick={() => {
                     fetchCancelJob({
                       jobId: record?.jobId,
-                      studentId: 1,
+                      studentId: studentId,
                     });
                   }}
                 >
                   取消投递
                 </Button>
-              </>
+              </Space>
             ) : (
               <>
                 {submitJobInfo.feedback === 2 || (
@@ -119,12 +127,14 @@ const JobDetail = (props: IJobDetail) => {
         <Descriptions.Item label="岗位类型">
           {record?.type ?? ""}
         </Descriptions.Item>
-        <Descriptions.Item label="企业名称">{record?.salary}</Descriptions.Item>
+        <Descriptions.Item label="企业名称">{record?.name}</Descriptions.Item>
         <Descriptions.Item label="企业官网">
           {record?.website}
         </Descriptions.Item>
-        <Descriptions.Item label="企业方向">{record?.salary}</Descriptions.Item>
-        <Descriptions.Item label="备注">empty</Descriptions.Item>
+        <Descriptions.Item label="企业方向">
+          {record?.companyType}
+        </Descriptions.Item>
+        <Descriptions.Item label="备注">{record?.remark}</Descriptions.Item>
       </Descriptions>
     </div>
   );

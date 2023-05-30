@@ -56,25 +56,25 @@ const CompanyManager = () => {
       dataIndex: "name",
       width: 180,
     },
-    {
-      title: "企业标志",
-      key: "pic",
-      dataIndex: "pic",
-      width: 90,
-      render: (_: any, record: any) => (
-        <Avatar
-          shape="square"
-          src={record?.pic}
-          style={{ backgroundColor: "#87d068" }}
-          icon={<UserOutlined />}
-        />
-      ),
-    },
+    // {
+    //   title: "企业标志",
+    //   key: "pic",
+    //   dataIndex: "pic",
+    //   width: 90,
+    //   render: (_: any, record: any) => (
+    //     <Avatar
+    //       shape="square"
+    //       src={record?.pic}
+    //       style={{ backgroundColor: "#87d068" }}
+    //       icon={<UserOutlined />}
+    //     />
+    //   ),
+    // },
     {
       title: "社会信用代码",
       key: "code",
       dataIndex: "code",
-      width: 120,
+      width: 190,
     },
     {
       title: "公司类型",
@@ -97,6 +97,7 @@ const CompanyManager = () => {
       title: "公司官网",
       key: "website",
       dataIndex: "website",
+      width: 180,
     },
     {
       title: "备注",

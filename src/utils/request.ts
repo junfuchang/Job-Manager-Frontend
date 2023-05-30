@@ -25,6 +25,10 @@ instance.interceptors.response.use(
   (response) => {
     const res = response?.data;
     if (res.code < 200 || res.code > 299) {
+      if (res.code === 401) {
+        message.warning("登录失效请重新登陆！");
+        logout();
+      }
       return Promise.reject(res);
     }
     return res;

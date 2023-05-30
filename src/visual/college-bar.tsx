@@ -11,8 +11,6 @@ export default function CollegeBar({ data = {} }: any) {
     JYRateData = [],
   } = data;
 
-  console.log("data", data);
-
   const ref =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
 
@@ -82,7 +80,7 @@ export default function CollegeBar({ data = {} }: any) {
     ],
     yAxis: [
       {
-        name: "人",
+        name: "人数",
         nameTextStyle: {
           color: "#fff",
           fontSize: 12,
@@ -225,6 +223,16 @@ export default function CollegeBar({ data = {} }: any) {
         data: JYRateData,
         itemStyle: {
           color: "#4574EB",
+        },
+        label: {
+          show: true, //开启显示
+          position: "right", //在上方显示
+          formatter: "{c}%", //显示百分号
+          textStyle: {
+            //数值样式
+            color: "white", //字体颜色
+            fontSize: 16, //字体大小
+          },
         },
       },
     ],

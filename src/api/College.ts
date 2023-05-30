@@ -70,6 +70,5 @@ export const selectRateData = async () => {
  */
 export const selectRateByYear = async () => {
   const res = await request.post("/server-api/overview/rateByYear");
-  console.log("res.data", res.data);
   return res?.data ?? {};
 };

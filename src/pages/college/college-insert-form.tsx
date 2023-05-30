@@ -124,7 +124,7 @@ const CollegeInsertForm = (props: any) => {
           collegeDrawer.current?.open();
         }}
       >
-        添加岗位
+        新增学院
       </Button>
     </>
   );

@@ -13,51 +13,51 @@ export default function Overview(props: any) {
       {
         locationList: [
           {
-            code: "110101",
+            code: "330102",
             name: "上城区",
           },
           {
-            code: "110102",
+            code: "330103",
             name: "拱墅区",
           },
           {
-            code: "110103",
+            code: "330106",
             name: "西湖区",
           },
           {
-            code: "110104",
+            code: "330108",
             name: "滨江区",
           },
           {
-            code: "110105",
+            code: "330109",
             name: "萧山区",
           },
           {
-            code: "110106",
+            code: "330110",
             name: "余杭区",
           },
           {
-            code: "110107",
+            code: "330111",
             name: "富阳区",
           },
           {
-            code: "110108",
+            code: "330112",
             name: "临安区",
           },
           {
-            code: "110109",
+            code: "330104",
             name: "钱塘区",
           },
           {
-            code: "110110",
+            code: "330110",
             name: "临平区",
           },
           {
-            code: "110111",
+            code: "330122",
             name: "桐庐县",
           },
           {
-            code: "110111",
+            code: "330127",
             name: "淳安县",
           },
         ],

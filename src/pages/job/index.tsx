@@ -35,10 +35,10 @@ const Job = () => {
   const handleShowJobStudentList = (title: string, jobId: number) => {
     FormDrawer(
       {
-        maskClosable: false,
+        maskClosable: true,
         footer: false,
         title: "投递岗位 " + title + " 学生详细信息",
-        width: "80%",
+        width: "90%",
       },
       () => (
         <div

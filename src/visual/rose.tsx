@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import BaseChart from "./base-charts";
 
-const directionTYPE = ["就业", "升学", "待业"];
+const directionTYPE = ["升学", "就业", "待业"];
 const degreeTYPE = ["其他", "学士", "硕士", "博士"];
 
 const Rose = (props: any) => {

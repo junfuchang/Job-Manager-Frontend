@@ -7,6 +7,7 @@ import { useState } from "react";
 import CollegeDetail from "./college-detail";
 import "./index.scss";
 import CollegeInsertForm from "./college-insert-form";
+import EmptyTip from "../../components/empty-tip";
 const { confirm } = Modal;
 
 const CollegeManager = () => {
@@ -121,7 +122,11 @@ const CollegeManager = () => {
         </div>
 
         <div className="right">
-          {active?.collegeId ? <CollegeDetail college={active} /> : undefined}
+          {active?.collegeId ? (
+            <CollegeDetail college={active} />
+          ) : (
+            <EmptyTip tip="点击右侧学院详细信息以编辑">学院信息编辑页</EmptyTip>
+          )}
         </div>
       </div>
     </div>

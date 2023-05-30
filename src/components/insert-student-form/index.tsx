@@ -292,29 +292,29 @@ const InsertStudentForm = (props: any) => {
             required: false,
             name: "birthday",
           },
-          avatar: {
-            type: "Array<object>",
-            title: "照片",
-            "x-decorator": "FormItem",
-            "x-component": "Upload",
-            "x-component-props": {
-              textContent: "上传图片",
-              listType: "picture",
-              beforeUpload: (file: UploadFile) => {
-                avatarData.current.append("file", file as RcFile);
-                return false;
-              },
-              style: {
-                borderRadius: "5px 5px 5px 5px",
-              },
-              // action: "/server-api/file/upload/img",
-              maxCount: 1,
-            },
-            "x-validator": [],
-            "x-decorator-props": {},
-            "x-designable-id": "avatar",
-            "x-index": 10,
-          },
+          // avatar: {
+          //   type: "Array<object>",
+          //   title: "照片",
+          //   "x-decorator": "FormItem",
+          //   "x-component": "Upload",
+          //   "x-component-props": {
+          //     textContent: "上传图片",
+          //     listType: "picture",
+          //     beforeUpload: (file: UploadFile) => {
+          //       avatarData.current.append("file", file as RcFile);
+          //       return false;
+          //     },
+          //     style: {
+          //       borderRadius: "5px 5px 5px 5px",
+          //     },
+          //     // action: "/server-api/file/upload/img",
+          //     maxCount: 1,
+          //   },
+          //   "x-validator": [],
+          //   "x-decorator-props": {},
+          //   "x-designable-id": "avatar",
+          //   "x-index": 10,
+          // },
           roleId: {
             type: "number",
             title: "角色",

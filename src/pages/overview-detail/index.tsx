@@ -11,7 +11,6 @@ const OvervireDetail = () => {
   const { data: rateData } = useRequest(selectRateData);
   const { data: rateByYear } = useRequest(selectRateByYear);
   const { data: detailNum } = useRequest(getOverviewDetailNum);
-  console.log("detailNum", detailNum);
 
   return (
     <div className="overview-detail">

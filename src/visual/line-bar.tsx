@@ -18,7 +18,7 @@ export default function LinnBar(props: any) {
         dataJY.push(i[1]?.jyCount);
         dataBY.push(i[1]?.totalCount);
         dataRate.push(
-          Math.round(((i[1]?.jyCount ?? 0) / (i[1]?.jyCount ?? 1)) * 10000) /
+          Math.round(((i[1]?.jyCount ?? 0) / (i[1]?.totalCount ?? 1)) * 10000) /
             100
         );
       });
@@ -81,7 +81,7 @@ export default function LinnBar(props: any) {
       },
       {
         type: "value",
-        name: "毕业率",
+        name: "就业率",
         min: 0,
         max: 100,
         minInterval: 1,
@@ -153,13 +153,23 @@ export default function LinnBar(props: any) {
         },
       },
       {
-        name: "毕业率",
+        name: "就业率",
         type: "line",
         yAxisIndex: 1,
         symbolSize: 8,
         data: dataRate,
         itemStyle: {
           color: "#4574EB",
+        },
+        label: {
+          show: true, //开启显示
+          position: "right", //在上方显示
+          formatter: "{c}%", //显示百分号
+          textStyle: {
+            //数值样式
+            color: "white", //字体颜色
+            fontSize: 16, //字体大小
+          },
         },
       },
     ],

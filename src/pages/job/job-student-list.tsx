@@ -1,4 +1,5 @@
 import { useAntdTable, useRequest } from "ahooks";
+import { UserOutlined } from "@ant-design/icons";
 import {
   Avatar,
   Button,
@@ -37,7 +38,6 @@ export default function JobStudentList(props: any) {
         },
       ],
       defaultPageSize: 20,
-      cacheKey: "JobStudentHistoryListCache",
     });
 
   const { submit, reset } = jobStudentListSearch;
@@ -60,7 +60,7 @@ export default function JobStudentList(props: any) {
       title: "筛选",
       key: "feedback",
       dataIndex: "feedback",
-      width: 60,
+      width: 80,
       render(_: any, record: any) {
         if (record.feedback === 0) return <Tag color="#108ee9">未筛选</Tag>;
         if (record.feedback === 1) return <Tag color="#f50">拒绝</Tag>;
@@ -68,20 +68,20 @@ export default function JobStudentList(props: any) {
         return <Tag>未知</Tag>;
       },
     },
-    {
-      title: "头像",
-      key: "avatar",
-      dataIndex: "avatar",
-      width: 70,
-      render: (_: any, record: any) => (
-        <Avatar
-          shape="square"
-          src={record?.avatar}
-          style={{ backgroundColor: "#87d068" }}
-          // icon={<UserOutlined />}
-        />
-      ),
-    },
+    // {
+    //   title: "头像",
+    //   key: "avatar",
+    //   dataIndex: "avatar",
+    //   width: 70,
+    //   render: (_: any, record: any) => (
+    //     <Avatar
+    //       shape="square"
+    //       src={record?.avatar}
+    //       style={{ backgroundColor: "#87d068" }}
+    //       icon={<UserOutlined />}
+    //     />
+    //   ),
+    // },
     {
       title: "专业",
       key: "major",
